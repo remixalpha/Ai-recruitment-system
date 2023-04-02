@@ -51,7 +51,7 @@ function View({ children, code, title, height, ...rest }) {
 
   useEffect(() => {
     setTimeout(() => setSuccess(false), 3000);
-  }, [success]);
+  }, []);
 
   return (
     <MKBox
@@ -147,9 +147,17 @@ function View({ children, code, title, height, ...rest }) {
                 width="25%"
                 mx="auto"
                 color="success"
-                sx={{ minHeight: "2.5rem !important", py: 1, justifyContent: "center" }}
+                sx={{
+                  minHeight: "2.5rem !important",
+                  py: 1,
+                  justifyContent: "center",
+                }}
               >
-                <MKTypography variant="body2" color="white" fontWeight="regular">
+                <MKTypography
+                  variant="body2"
+                  color="white"
+                  fontWeight="regular"
+                >
                   Code successfully copied!
                 </MKTypography>
               </MKAlert>
