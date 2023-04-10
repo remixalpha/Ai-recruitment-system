@@ -10,6 +10,8 @@ const LoginRegistrationPage = () => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [resumeFile, setResumeFile] = useState(null);
 
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -24,6 +26,9 @@ const LoginRegistrationPage = () => {
       // display error message
     }
   };
+
+
+
 
   const handleRegistration = async (e) => {
     e.preventDefault();
@@ -70,6 +75,11 @@ const LoginRegistrationPage = () => {
           <button type="submit">Login</button>
         </form>
       </div>
+      
+      
+      
+      
+      
       <div>
         <h2>Register</h2>
         <form onSubmit={handleRegistration}>
@@ -110,6 +120,8 @@ const LoginRegistrationPage = () => {
           <button type="submit">Register</button>
         </form>
       </div>
+      
+      
     </div>
   );
 };

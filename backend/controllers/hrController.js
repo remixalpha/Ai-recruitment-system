@@ -88,3 +88,47 @@ exports.approveHRAccount = async (req, res, next) => {
     next(err);
   }
 };
+
+// handle HTTP GET request for retrieving all HR users
+exports.getAllHR = async (req, res, next) => {
+  try {
+    const allHR = await HR.find();
+    res.status(200).json({
+      status: 'success',
+      message: 'All HR users retrieved successfully',
+      data: allHR,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+// handle HTTP PUT request for updating HR user information
+exports.updateHR = async (req, res, next) => {
+  try {
+    const updatedHR = await HR.findByIdAndUpdate(req.params.hrId, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!updatedHR) {
+      res.status(404).json({
+        status: 'fail',
+        message: 'HR user not found',
+      });
+    } else {
+      res.status(200).json({
+        status: 'success',
+        message: 'HR user updated successfully',
+        data: updatedHR,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+
+
+  

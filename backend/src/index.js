@@ -11,7 +11,7 @@ const app = express();
 
 // Connect to database
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect("mongodb://localhost:27017/Ai", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -32,5 +32,5 @@ app.post("/user/login", userController.login);
 app.get("/user", userController.getUser);
 
 // Start the server
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
