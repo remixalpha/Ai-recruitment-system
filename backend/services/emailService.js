@@ -1,5 +1,5 @@
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey('a7_rABgoTj28i1fl_160ag');
 
 function sendRegistrationNotification(hrData) {
   const msg = {
