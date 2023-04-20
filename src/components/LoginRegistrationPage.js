@@ -1,5 +1,7 @@
-import '../css/login.css';
-import React, { useState } from 'react';
+import '../login.css';
+import React, { useState,useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -13,7 +15,9 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { useHistory } from 'react-router-dom';
+
+
+
 import axios from 'axios';
 
 const LoginRegistrationPage = () => {
@@ -307,11 +311,21 @@ const LoginRegistrationPage = () => {
       setShowPassword_hr(!showPassword_hr);
     };
 
+    useEffect(() => {
+      document.querySelector('#root').classList.add('login-page');
+  
+      return () => {
+        document.querySelector('#root').classList.remove('login-page');
+      };
+    }, [])
+
+
+
       //body
 
       return (
 
-        <div>
+        <div id='root'>
           <Box
             sx={{
               width: 500,

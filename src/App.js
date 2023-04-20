@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
+import Signin from "./pages/SignIn";
+
 import LoginRegistrationPage from "./components/LoginRegistrationPage";
 import UserHomePage from "./components/UserProfilePage";
 import HrHomePage from "./components/HRProfilePage";
@@ -13,6 +15,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home />} />
+
+        <Route path="/signin" element={<Signin />} />
         <Route path="/loginregisterpage" element={<LoginRegistrationPage />} />
         <Route path="/user/;email" element={<UserHomePage />} />
         <Route path="/hr/:email" component={<HrHomePage />} />
