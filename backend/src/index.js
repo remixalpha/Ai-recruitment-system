@@ -27,10 +27,10 @@ app.post("/hr/register", hrControllers.registerHR);
 app.post("/hr/login", hrControllers.loginHR);
 app.get("/hr/:hrId/profile", hrControllers.getHRProfile);
 app.put("/hr/:hrId/approve", hrControllers.approveHRAccount);
-app.post("/user/register", userController.register);
-app.post("/user/login", userController.login);
-app.get("/user", userController.getUser);
+app.post("/users/register", userController.register);
+app.post("/users/login", userController.login);
+app.get("/users", userController.getUser);
 
 // Start the server
-const PORT = 3000;
+const PORT = 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

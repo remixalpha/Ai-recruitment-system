@@ -25,7 +25,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/hr', hrRoutes);
 
 // Start the server
-const PORT =  3000;
+const PORT =  5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

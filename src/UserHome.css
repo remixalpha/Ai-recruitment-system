@@ -1,0 +1,21 @@
+body{
+    margin:0;
+    box-sizing:border-box;
+    font-family: 'Roboto', sans-serif;
+}
+.notifiedground::-webkit-scrollbar {
+    background-color:transparent;
+    width:1px;
+  }
+.notifiedground::-webkit-scrollbar-thumb {
+    background-color:gold;
+    border-radius:10px;
+  }
+  .notiexpand::-webkit-scrollbar {
+    background-color:transparent;
+    width:1px;
+  }
+.notiexpand::-webkit-scrollbar-thumb {
+    background-color:gold;
+    border-radius:10px;
+  }
