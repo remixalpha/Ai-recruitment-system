@@ -1,47 +1,32 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [loginEmail, setEmail] = useState('');
-  const [loginPassword, setPassword] = useState('');
+  const [loginEmail, setEmail] = useState("");
+  const [loginPassword, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const URL = "http://localhost:5000/";
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const errors = {};
-    if (!loginEmail) {
-      errors.email = 'Email is required';
-    }
-    if (!loginPassword) {
-      errors.password = 'Password is required';
-    }
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
+    if (!isFormValid()) {
       return;
     }
 
     try {
-      const hr = await axios.get(`/api/Ai/HR?email=${loginEmail}&password=${loginPassword}`);
-      if (hr.data.length) {
-        navigate.push(`/hr/${loginEmail}`);
-        return;
-      }
-
-      const user = await axios.get(`/api/Ai/users?email=${loginEmail}&password=${loginPassword}`);
-      if (user.data.length) {
-        navigate.push(`/user/${loginEmail}`);
-        return;
-      }
-
-      errors.email = 'Email or password is incorrect';
-      setErrors(errors);
+      const response = await axios.post(`${URL}users/login`, {
+        email: loginEmail,
+        password: loginPassword,
+      });
+      console.log({ doc: response.data }); // Do something with the response data
+      // navigate("/");
     } catch (error) {
-      errors.email = 'An error occurred';
-      setErrors(errors);
+      console.log(error.response.data);
+      setErrors({ message: error.response.data.message });
     }
   };
 
@@ -62,9 +47,22 @@ function Login() {
   };
 
   const isFormValid = () => {
-    return loginEmail && loginPassword && Object.keys(errors).length === 0;
-  };
+    let errors = {};
+    let isValid = true;
 
+    if (!loginEmail) {
+      errors.email = "Email is required";
+      isValid = false;
+    }
+
+    if (!loginPassword) {
+      errors.password = "Password is required";
+      isValid = false;
+    }
+
+    setErrors(errors);
+    return isValid;
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
@@ -72,7 +70,10 @@ function Login() {
         <h2 className="text-2xl font-bold mb-4">Log In</h2>
         <form>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-bold mb-2"
+            >
               Email
             </label>
             <input
@@ -83,15 +84,18 @@ function Login() {
               onChange={handleEmailChange}
               className="border rounded-lg py-2 px-3 w-full"
             />
-             {errors.email && <p className="text-red-500">{errors.email}</p>}
+            {errors.email && <p className="text-red-500">{errors.email}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-bold mb-2"
+            >
               Password
             </label>
             <div className="relative">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 value={loginPassword}
@@ -104,15 +108,17 @@ function Login() {
                 className="absolute top-0 right-0 h-full  text-gray-500 hover:text-gray-700 flex items-center justify-center"
               >
                 {showPassword ? (
-                  <span class="material-icons-outlined">
+                  <span className="material-icons-outlined">
                     visibility_off
                   </span>
                 ) : (
-                  <span class="material-icons-outlined">visibility</span>
-              )}
+                  <span className="material-icons-outlined">visibility</span>
+                )}
               </button>
             </div>
-            {errors.password && <p className="text-red-500">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500">{errors.password}</p>
+            )}
           </div>
           <div className="flex items-center justify-between mb-4">
             <div className="text-sm">
@@ -126,7 +132,7 @@ function Login() {
             </div>
           </div>
           <button
-            type="button"
+            // type="submit"
             onClick={(e) => handleLogin(e)}
             className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none w-full"
           >
