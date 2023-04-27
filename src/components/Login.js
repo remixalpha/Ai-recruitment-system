@@ -7,39 +7,76 @@ function Login() {
   const [loginEmail, setEmail] = useState("");
   const [loginPassword, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [userToken, setUserToken] = useState(false);
+  const [adminToken, setAdminToken] = useState(false);
+
   const navigate = useNavigate();
   const URL = "http://localhost:5000/";
-
 
   // B (Login)
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     if (!isFormValid()) {
       return;
     }
-  
+
+    // try {
+    //   const userResponse = await axios.post(`${URL}users/login`, {
+    //     email: loginEmail,
+    //     password: loginPassword,
+    //   });
+    //   const hrResponse = await axios.post(`${URL}hr/login`, {
+    //     email: loginEmail,
+    //     password: loginPassword,
+    //   });
+    //   if (userResponse?.data?.token) {
+    //     // Redirect to User home page
+    //     navigate("/user");
+    //   } else if (hrResponse?.data?.token) {
+    //     navigate("/hrhome");
+    //   } else {
+    //     console.log("hi hello how are you");
+    //   }
+    // } catch (error) {
+    //   console.log(error.response.data);
+    //   setErrors({ message: error.response.data.message });
+    // }
     try {
-      const userResponse = await axios.post(`${URL}users/login`, {
-        email: loginEmail,
-        password: loginPassword,
-      });
-      const hrResponse = await axios.post(`${URL}hr/login`, {
-        email: loginEmail,
-        password: loginPassword,
-      });
-      if (userResponse.data.token)  {
+      axios
+        .post("http://localhost:5000/users/login", {
+          email: loginEmail,
+          password: loginPassword,
+        })
+        .then((res) => {
+          if (res) {
+            setUserToken(res.data.token);
+          } else {
+          }
+        });
+      axios
+        .post("http://localhost:5000/hr/login", {
+          email: loginEmail,
+          password: loginPassword,
+        })
+        .then((res) => {
+          if (res) {
+            setAdminToken(res.data.token);
+          } else {
+            setAdminToken(false);
+          }
+        });
+
+      if (userToken) {
         // Redirect to User home page
         navigate("/user");
-      } else if (hrResponse.data.token) {
-        // Redirect to HR home page
+      }
+      if (adminToken) {
         navigate("/hrhome");
-      } else {
-        setErrors({ message: "Invalid email or password" });
       }
     } catch (error) {
-      console.log(error.response.data);
-      setErrors({ message: error.response.data.message });
+      console.error(error);
+      console.log("An error occurred while logging in.");
     }
   };
   //
