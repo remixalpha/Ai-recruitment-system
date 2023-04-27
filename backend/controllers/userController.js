@@ -1,11 +1,53 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const secret = process.env.JWT_SECRET;
 const User = require("../models/userModel");
 
 const userController = {};
 
+
+
+
+// Authenticate a user
+userController.login = async (req, res,next) => {
+  console.log(req.body);
+
+  try {
+    const { email, password } = req.body;
+
+    // Check if the user exists
+    const users = await User.findOne({ email });
+    if (!users) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    // Check if the password is correct
+    const passwordMatch = await bcrypt.compare(password, users.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign({ userId: users._id },secret );
+
+    res.status(200).json({ message: "Authentication successful", token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+
+
+
+
+
+
+
 // Register a new user
-userController.register = async (req, res) => {
+/* userController.register = async (req, res) => {
   try {
     const { firstName, lastName, email, password, resume } = req.body;
 
@@ -38,34 +80,10 @@ userController.register = async (req, res) => {
   }
 };
 
-// Authenticate a user
-userController.login = async (req, res) => {
-  console.log(req.body);
 
-  try {
-    const { email, password } = req.body;
 
-    // Check if the user exists
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
 
-    // Check if the password is correct
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
 
-    // Generate a JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-
-    res.status(200).json({ message: "Authentication successful", token });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-};
 
 // Get user details
 userController.getUser = async (req, res) => {
@@ -83,6 +101,6 @@ userController.getUser = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-};
+};*/
 
 module.exports = userController;

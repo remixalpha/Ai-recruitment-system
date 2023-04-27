@@ -1,8 +1,62 @@
-const HR = require('../models/hrModel');
+
 const emailService = require('../services/emailService');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const HR = require("../models/hrModel");
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+const hrcontroller ={};
+// Authenticate a HR
+hrcontroller.loginHR = async (req, res, next) => {
+  console.log(req.body);
+
+  try {
+    const { email, password } = req.body;
+
+    // Check if the user exists
+    const hrUser = await HR.findOne({ email });
+    if (!hrUser) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    // check if password is correct
+    const passwordMatch = await bcrypt.compare(password, hrUser.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign({ hrId: hrUser._id }, JWT_SECRET);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'HR user logged in successfully',
+      token,
+      data: hrUser,
+    });
+  }catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // handle HTTP POST request for HR registration
-exports.registerHR = async (req, res, next) => {
+/* exports.registerHR = async (req, res, next) => {
   try {
     const { companyName, hrName, email, password, companyType } = req.body;
     // validate input data
@@ -22,26 +76,30 @@ exports.registerHR = async (req, res, next) => {
   }
 };
 
-// handle HTTP GET request for HR login
-exports.loginHR = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    // validate input data
-    // ...
-    // find HR data in database
-    const hrUser = await HR.findOne({ email });
-    // check if password is correct
-    // ...
-    res.status(200).json({
-      status: 'success',
-      message: 'HR user logged in successfully',
-      data: hrUser,
-    });
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // handle HTTP GET request for HR profile
 exports.getHRProfile = async (req, res, next) => {
@@ -128,7 +186,7 @@ exports.updateHR = async (req, res, next) => {
     next(err);
   }
 };
+*/
 
 
-
-  
+module.exports = hrcontroller;

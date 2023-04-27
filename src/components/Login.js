@@ -10,25 +10,39 @@ function Login() {
   const navigate = useNavigate();
   const URL = "http://localhost:5000/";
 
+
+  // B (Login)
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     if (!isFormValid()) {
       return;
     }
-
+  
     try {
-      const response = await axios.post(`${URL}users/login`, {
+      const userResponse = await axios.post(`${URL}users/login`, {
         email: loginEmail,
         password: loginPassword,
       });
-      console.log({ doc: response.data }); // Do something with the response data
-      // navigate("/");
+      const hrResponse = await axios.post(`${URL}hr/login`, {
+        email: loginEmail,
+        password: loginPassword,
+      });
+      if (userResponse.data.token)  {
+        // Redirect to User home page
+        navigate("/user");
+      } else if (hrResponse.data.token) {
+        // Redirect to HR home page
+        navigate("/hrhome");
+      } else {
+        setErrors({ message: "Invalid email or password" });
+      }
     } catch (error) {
       console.log(error.response.data);
       setErrors({ message: error.response.data.message });
     }
   };
+  //
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -132,7 +146,7 @@ function Login() {
             </div>
           </div>
           <button
-            // type="submit"
+            type="submit"
             onClick={(e) => handleLogin(e)}
             className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none w-full"
           >

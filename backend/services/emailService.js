@@ -1,5 +1,9 @@
+// Load environment variables from a .env file
+require('dotenv').config();
+
+// Set up SendGrid mailer
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('a7_rABgoTj28i1fl_160ag');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function sendRegistrationNotification(hrData) {
   const msg = {
@@ -16,3 +20,7 @@ function sendRegistrationNotification(hrData) {
 module.exports = {
   sendRegistrationNotification,
 };
+
+
+
+

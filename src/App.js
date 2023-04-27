@@ -7,6 +7,8 @@ import Signup from "./pages/SignUp";
 import Meethome from "../src/Home";
 import Room from "./Room";
 import QuestionBox from "../src/components/QuestionBox";
+
+
 import HrHome from "../src/components/HRhome";
 import HrProfile from "../src/components/HRProfile";
 import JobAppli from "../src/components/JobApplication";
@@ -27,7 +29,7 @@ import UserSettings from './components/UserSettings';
 
 
 
-import HrHomePage from "./components/HRhome";
+
 
 import "./css/style.css";
 
@@ -41,6 +43,8 @@ function App() {
         <Route exact path="/assesmentest" element={<QuestionBox />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+
+        
         <Route path="/hrhome" element={<HrHome />} />
         <Route path="/hrPro" element={<HrProfile />} />
         <Route path="/jobapp" element={<JobAppli />} />
@@ -49,7 +53,7 @@ function App() {
         <Route path="/loginpage" element={<LoginPage />} />
 
 
-        <Route path="/user/:email" element={<UserHomePage />} />
+        <Route path="/user" element={<UserHomePage />} />
         <Route path="/profile" element={<UserProf />} />
         <Route path="/jobs" element={<UserJobs />} />
         <Route path="/meetings" element={<UserMeetings />} />
@@ -58,7 +62,7 @@ function App() {
 
 
 
-        <Route path="/hr/:email" component={<HrHomePage />} />
+       
       </Routes>
     </BrowserRouter>
   );
