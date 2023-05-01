@@ -4,7 +4,7 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 .notifiedground::-webkit-scrollbar {
-    background-color:transparent;
+    background-color:white;
     width:1px;
   }
 .notifiedground::-webkit-scrollbar-thumb {
@@ -12,7 +12,7 @@ body{
     border-radius:10px;
   }
   .notiexpand::-webkit-scrollbar {
-    background-color:transparent;
+    background-color:white;
     width:1px;
   }
 .notiexpand::-webkit-scrollbar-thumb {

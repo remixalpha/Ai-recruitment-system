@@ -1,6 +1,6 @@
-import '../UserHome.css';
+import '../css/user/UserHome.css';
 import fsd from '../assets/fsd.jpg';
-import fsdc from '../assets/fsdc.jpg'
+import fsdc from '../assets/job1.png'
 import { useState, useEffect, useRef  } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -122,7 +122,7 @@ function Home(){
       }
       const homenavclick = (event) => {
         homenav.current.style.borderLeft = '4px solid #EF4444';
-        homenav.current.style.backgroundColor = '#EBF4FF';
+        homenav.current.style.backgroundColor = '#fff';
         jobnav.current.style.borderLeft = 'none';
         jobnav.current.style.backgroundColor = 'white';
         meetingnav.current.style.borderLeft = 'none';
@@ -136,7 +136,7 @@ function Home(){
       };
       const jobnavclick = (event) => {
         jobnav.current.style.borderLeft = '4px solid #EF4444';
-        jobnav.current.style.backgroundColor = '#EBF4FF';
+        jobnav.current.style.backgroundColor = '#fff';
         homenav.current.style.borderLeft = 'none';
         homenav.current.style.backgroundColor = 'white';
         meetingnav.current.style.borderLeft = 'none';
@@ -150,7 +150,7 @@ function Home(){
       };
       const meetingnavclick = (event) => {
         meetingnav.current.style.borderLeft = '4px solid #EF4444';
-        meetingnav.current.style.backgroundColor = '#EBF4FF';
+        meetingnav.current.style.backgroundColor = '#fff';
         jobnav.current.style.borderLeft = 'none';
         jobnav.current.style.backgroundColor = 'white';
         homenav.current.style.borderLeft = 'none';
@@ -164,7 +164,7 @@ function Home(){
       };
       const companynavclick = (event) => {
         companynav.current.style.borderLeft = '4px solid #EF4444';
-        companynav.current.style.backgroundColor = '#EBF4FF';
+        companynav.current.style.backgroundColor = '#fff';
         jobnav.current.style.borderLeft = 'none';
         jobnav.current.style.backgroundColor = 'white';
         meetingnav.current.style.borderLeft = 'none';
@@ -178,7 +178,7 @@ function Home(){
       };
       const settingsnavclick = (event) => {
         settingsnav.current.style.borderLeft = '4px solid #EF4444';
-        settingsnav.current.style.backgroundColor = '#EBF4FF';
+        settingsnav.current.style.backgroundColor = '#fff';
         jobnav.current.style.borderLeft = 'none';
         jobnav.current.style.backgroundColor = 'white';
         meetingnav.current.style.borderLeft = 'none';

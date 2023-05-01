@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import Transition from '../utils/Transition';
+import Transition from './Transition';
 
 function Modal({
   children,

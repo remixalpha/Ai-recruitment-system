@@ -45,7 +45,7 @@ function HeroHome() {
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-16">
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h1 mb-4" data-aos="fade-up">
+            <h1 className="h1 mb-4 text-gray-300" data-aos="fade-up">
             Join Our Network 
             </h1>
             <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
@@ -103,7 +103,7 @@ function HeroHome() {
             <Modal id="modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => setVideoModalOpen(false)}>
               <div className="relative pb-9/16">
                 <video ref={video} className="absolute w-full h-full" width="1920" height="1080" loop autoPlay controls>
-                  <source src="/videos/video.mp4" type="video/mp4" />
+                  <source src="../assets/video/video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>

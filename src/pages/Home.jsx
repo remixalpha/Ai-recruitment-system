@@ -11,14 +11,15 @@ import Newsletter from '../partials/Newsletter';
 import Banner from '../partials/Banner';
 import Footer from '../partials/Footer';
 
+
 function Home() {
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden">
+    <div className="flex flex-col min-h-screen ">
       {/*  Site header */}
       <Header />
 
       {/*  Page content */}
-      <main className="grow">
+      <main className="grow bg-black">
         {/*  Page illustration */}
         <div className="relative max-w-6xl mx-auto h-0 pointer-events-none" aria-hidden="true">
           <PageIllustration />

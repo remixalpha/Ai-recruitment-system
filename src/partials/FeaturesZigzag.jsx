@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../src/css/style.css';
+import '../css/style.css';
 
 
 import FeatImage01 from '../images/features-03-image-01.png';

@@ -11,7 +11,7 @@ import QuestionBox from "../src/components/QuestionBox";
 
 import HrHome from "../src/components/HRhome";
 import HrProfile from "../src/components/HRProfile";
-import JobAppli from "../src/components/JobApplication";
+import JobApplication from "../src/components/JobApplication";
 
 
 
@@ -28,6 +28,12 @@ import UserCompanies from './components/UserCompanies';
 import UserSettings from './components/UserSettings';
 
 
+import Registration from './components/registration';
+import Resetpassword from './pages/ResetPassword';
+
+
+
+
 
 
 
@@ -38,19 +44,32 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Home />} />
+
+{/*login*/}
+        <Route path="/logreg" element={<LoginRegPage />} />
+        {/* Optional login */}
+        <Route path="/loginpage" element={<LoginPage />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+
+{/* Registraton */}
+
+        <Route path="/reg" element={<Registration />} />
+        {/* Resetpassword */}
+        <Route path="/reset-password" element={<Resetpassword />} />
+
+
+
         <Route exact path="/meethome" element={<Meethome />} />
         <Route path="/room/:roomID" element={<Room />} />
         <Route exact path="/assesmentest" element={<QuestionBox />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
+
 
         
         <Route path="/hrhome" element={<HrHome />} />
         <Route path="/hrPro" element={<HrProfile />} />
-        <Route path="/jobapp" element={<JobAppli />} />
+        <Route path="/jobapp" element={<JobApplication />} />
 
-        <Route path="/logreg" element={<LoginRegPage />} />
-        <Route path="/loginpage" element={<LoginPage />} />
 
 
         <Route path="/user" element={<UserHomePage />} />

@@ -7,7 +7,7 @@ import Banner from '../partials/Banner';
 
 function ResetPassword() {
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden">
+    <div className="flex flex-col min-h-screen bg-black  overflow-hidden">
 
       {/*  Site header */}
       <Header />
@@ -26,7 +26,7 @@ function ResetPassword() {
 
               {/* Page header */}
               <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-                <h1 className="h1 mb-4">Forgot your password?</h1>
+                <h1 className="h1 mb-4 text-gray-300">Forgot your password?</h1>
                 <p className="text-xl text-gray-400">We'll email you instructions on how to reset it.</p>
               </div>
 
@@ -36,17 +36,17 @@ function ResetPassword() {
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Email</label>
-                      <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
+                      <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="youremail@gmail.com" required />
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                      <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Reset Password</button>
+                      <button className="btn text-white bg-blue-600 hover:bg-blue-700 w-full">Reset Password</button>
                     </div>
                   </div>
                 </form>
                 <div className="text-gray-400 text-center mt-6">
-                  <Link to="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Cancel</Link>
+                  <Link to="/signin" className="text-blue-600 hover:text-gray-200 transition duration-150 ease-in-out">Cancel</Link>
                 </div>
               </div>
 
