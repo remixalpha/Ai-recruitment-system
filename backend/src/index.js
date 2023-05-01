@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config();
-const cors = require('cors');
+const cors = require("cors");
 
 // Import controllers
 const hrControllers = require("../controllers/hrController");
@@ -31,7 +31,7 @@ app.use((err, req, res, next) => {
 });
 
 // Routes
-//app.post("/hr/register", hrControllers.registerHR);
+app.post("/hr/register", hrControllers.registerHR);
 app.post("/hr/login", hrControllers.loginHR);
 //app.get("/hr/:hrId/profile", hrControllers.getHRProfile);
 //app.put("/hr/:hrId/approve", hrControllers.approveHRAccount);

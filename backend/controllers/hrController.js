@@ -1,12 +1,11 @@
-
-const emailService = require('../services/emailService');
+const emailService = require("../services/emailService");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const HR = require("../models/hrModel");
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const hrcontroller ={};
+const hrcontroller = {};
 // Authenticate a HR
 hrcontroller.loginHR = async (req, res, next) => {
   console.log(req.body);
@@ -30,44 +29,39 @@ hrcontroller.loginHR = async (req, res, next) => {
     const token = jwt.sign({ hrId: hrUser._id }, JWT_SECRET);
 
     res.status(200).json({
-      status: 'success',
-      message: 'HR user logged in successfully',
+      status: "success",
+      message: "HR user logged in successfully",
       token,
       data: hrUser,
     });
-  }catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // handle HTTP POST request for HR registration
-/* exports.registerHR = async (req, res, next) => {
+hrcontroller.registerHR = async (req, res, next) => {
   try {
     const { companyName, hrName, email, password, companyType } = req.body;
     // validate input data
     // ...
     // save HR data to database
-    const newHR = await HR.create({ companyName, hrName, email, password, companyType });
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newHR = await HR.create({
+      companyName,
+      hrName,
+      email,
+      password: hashedPassword,
+      companyType,
+    });
     // send email notification to developer
+
     emailService.sendRegistrationNotification(newHR);
     res.status(201).json({
-      status: 'success',
-      message: 'HR user registered successfully',
+      status: "success",
+      message: "HR user registered successfully",
       data: newHR,
     });
   } catch (err) {
@@ -76,45 +70,20 @@ hrcontroller.loginHR = async (req, res, next) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // handle HTTP GET request for HR profile
 exports.getHRProfile = async (req, res, next) => {
   try {
     const hrUser = await HR.findById(req.params.hrId);
     if (!hrUser) {
       res.status(404).json({
-        status: 'fail',
-        message: 'HR user not found',
+        status: "fail",
+        message: "HR user not found",
       });
       return;
     }
     res.status(200).json({
-      status: 'success',
-      message: 'HR user profile retrieved successfully',
+      status: "success",
+      message: "HR user profile retrieved successfully",
       data: hrUser,
     });
   } catch (err) {
@@ -129,16 +98,16 @@ exports.approveHRAccount = async (req, res, next) => {
     const hrUser = await HR.findById(req.params.hrId);
     if (!hrUser) {
       res.status(404).json({
-        status: 'fail',
-        message: 'HR user not found',
+        status: "fail",
+        message: "HR user not found",
       });
       return;
     }
     // update HR account with developer approval
     // ...
     res.status(200).json({
-      status: 'success',
-      message: 'HR account approved successfully',
+      status: "success",
+      message: "HR account approved successfully",
       data: hrUser,
     });
   } catch (err) {
@@ -152,8 +121,8 @@ exports.getAllHR = async (req, res, next) => {
   try {
     const allHR = await HR.find();
     res.status(200).json({
-      status: 'success',
-      message: 'All HR users retrieved successfully',
+      status: "success",
+      message: "All HR users retrieved successfully",
       data: allHR,
     });
   } catch (err) {
@@ -171,13 +140,13 @@ exports.updateHR = async (req, res, next) => {
     });
     if (!updatedHR) {
       res.status(404).json({
-        status: 'fail',
-        message: 'HR user not found',
+        status: "fail",
+        message: "HR user not found",
       });
     } else {
       res.status(200).json({
-        status: 'success',
-        message: 'HR user updated successfully',
+        status: "success",
+        message: "HR user updated successfully",
         data: updatedHR,
       });
     }
@@ -186,7 +155,5 @@ exports.updateHR = async (req, res, next) => {
     next(err);
   }
 };
-*/
-
 
 module.exports = hrcontroller;
