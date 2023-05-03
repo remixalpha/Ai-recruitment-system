@@ -36,7 +36,11 @@ function Login() {
           })
           .then((res) => {
             if (res?.data?.token) {
-              navigate("/hrhome");
+              window.localStorage.setItem("hr-auth-key", res.data.token);
+              window.localStorage.setItem("hr", res.data.doc);
+
+              navigate("/");
+              window.location.reload();
             }
             // setErrors(res?.data?.message);
 
@@ -50,7 +54,11 @@ function Login() {
           })
           .then((res) => {
             if (res?.data?.token) {
-              navigate("/user");
+              window.localStorage.setItem("user-auth-key", res.data.token);
+              window.localStorage.setItem("user", res.data.doc);
+
+              navigate("/");
+              window.location.reload();
             }
             setErrors("Invalid credentials");
             console.log("login not performed");

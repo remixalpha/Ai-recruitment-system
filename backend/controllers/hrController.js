@@ -32,7 +32,7 @@ hrcontroller.loginHR = async (req, res, next) => {
       status: "success",
       message: "HR user logged in successfully",
       token,
-      data: hrUser,
+      doc: hrUser._id,
     });
   } catch (err) {
     console.error(err);

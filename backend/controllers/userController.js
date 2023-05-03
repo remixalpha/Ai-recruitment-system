@@ -5,11 +5,8 @@ const User = require("../models/userModel");
 
 const userController = {};
 
-
-
-
 // Authenticate a user
-userController.login = async (req, res,next) => {
+userController.login = async (req, res, next) => {
   console.log(req.body);
 
   try {
@@ -28,26 +25,21 @@ userController.login = async (req, res,next) => {
     }
 
     // Generate a JWT token
-    const token = jwt.sign({ userId: users._id },secret );
+    const token = jwt.sign({ userId: users._id }, secret);
 
-    res.status(200).json({ message: "Authentication successful", token });
+    res.status(200).json({
+      message: "Authentication successful",
+      token,
+      doc: users._id,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-
-
-
-
-
-
-
-
-
 // Register a new user
-/* userController.register = async (req, res) => {
+userController.register = async (req, res) => {
   try {
     const { firstName, lastName, email, password, resume } = req.body;
 
@@ -80,18 +72,16 @@ userController.login = async (req, res,next) => {
   }
 };
 
-
-
-
-
-
 // Get user details
 userController.getUser = async (req, res) => {
   try {
-    const { userId } = req;
+    const { userId } = req.body;
 
     // Check if the user exists
-    const user = await User.findById(userId);
+    // const user = await User.findById(userId).select(
+    //   "firstName lastName  resume "
+    // );
+    const user = await User.find().select("firstName lastName  resume ");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -101,6 +91,6 @@ userController.getUser = async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-};*/
+};
 
 module.exports = userController;
