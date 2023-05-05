@@ -5,6 +5,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Profile() {
+
+  const [firstName, setFirstName] = useState('');
+
+
+
+
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isEdit, setIsEdit] = useState(true);
@@ -39,6 +45,7 @@ function Profile() {
         setUser(res.data);
       });
   };
+
   useEffect(() => {
     fetchUser();
     const timer = setTimeout(() => {
@@ -46,6 +53,26 @@ function Profile() {
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
+
+  // function handleFirstNameChange(res) {
+  //   // Modify firstName when user inputs a new value
+  //   setFirstName(res.data);
+  // }
+
+
+  //   function handleUpdateClick() {
+  //   // Update firstName in database when user clicks update button
+  //   axios.put('user/register', { firstName })
+  //     .then(response => {
+  //       console.log(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }
+
+
   const [image, setImage] = useState("https://via.placeholder.com/150");
   const [fileInputKey, setFileInputKey] = useState(0);
   const handleFileChange = (e) => {
@@ -56,6 +83,8 @@ function Profile() {
       setImage(reader.result);
     };
   };
+
+  //clicks
   const homeclick = (event) => {
     event.preventDefault();
     navigate("/");
@@ -68,6 +97,9 @@ function Profile() {
     event.preventDefault();
     navigate("/companies");
   };
+
+
+//signout
   const signoutclick = (event) => {
     localStorage.removeItem("user");
     localStorage.removeItem("user-auth-key");
@@ -76,6 +108,7 @@ function Profile() {
     navigate("/");
     window.location.reload();
   };
+
   const editmode = () => {
     setIsEdit(false);
   };
@@ -122,6 +155,8 @@ function Profile() {
   const cancelmode = () => {
     setIsEdit(true);
   };
+
+  
   return (
     <div>
       {isLoading ? (
@@ -543,7 +578,9 @@ function Profile() {
                           className="bg-gray-300 p-2 rounded-md text-base font-sans font-bold outline-none caret-red-600 text-gray-900 w-3/5"
                           placeholder="First Name"
                           ref={fname}
+                          value={user.firstName}
                           required
+                          
                         />
                       </div>
                       <div className="w-3/4 h-fit flex items-center justify-start p-2 gap-12">
@@ -558,6 +595,7 @@ function Profile() {
                           className="bg-gray-300 p-2  rounded-md text-base font-sans font-bold outline-none caret-red-600 text-gray-900 w-3/5"
                           placeholder="Last Name"
                           ref={lname}
+                          value={user.lastName}
                           required
                         />
                       </div>
@@ -573,6 +611,7 @@ function Profile() {
                           className="bg-gray-300 p-2 ml-1 rounded-md text-base font-sans font-bold outline-none caret-red-600 text-gray-900 w-3/5"
                           placeholder="Email Id"
                           ref={email}
+                          value={user.email}
                           required
                         />
                       </div>

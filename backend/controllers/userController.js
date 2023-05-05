@@ -1,7 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
-const User = require("../models/userModel");
+const UserCollection = require("../models/userModel");
+
 
 const userController = {};
 
@@ -13,7 +14,7 @@ userController.login = async (req, res, next) => {
     const { email, password } = req.body;
 
     // Check if the user exists
-    const users = await User.findOne({ email });
+    const users = await UserCollection.findOne({ email });
     if (!users) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
@@ -44,7 +45,7 @@ userController.register = async (req, res) => {
     const { firstName, lastName, email, password, resume } = req.body;
 
     // Check if the email is already in use
-    const existingUser = await User.findOne({ email });
+    const existingUser = await UserCollection.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email is already in use" });
     }
@@ -54,7 +55,7 @@ userController.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Create a new user object
-    const newUser = new User({
+    const newUser = new UserCollection({
       firstName,
       lastName,
       email,
@@ -78,13 +79,14 @@ userController.getUser = async (req, res) => {
     const { userId } = req.body;
 
     // Check if the user exists
-    // const user = await User.findById(userId).select(
+    // const user = await UserCollection.findById(userId).select(
     //   "firstName lastName  resume "
     // );
-    const user = await User.find().select("firstName lastName  resume ");
+    const user = await UserCollection.findById(userId).select("firstName lastName email resume ");
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "UserCollection not found" });
     }
+   
 
     res.status(200).json(user);
   } catch (err) {

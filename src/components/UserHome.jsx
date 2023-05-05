@@ -307,20 +307,26 @@ function Home() {
       ) : (
         <div
           className="w-full h-full flex items-center justify-center"
-          style={{ height: "100vh", backgroundColor: "lavender" }}
+          style={{ height: "100vh", backgroundColor: "#f4f7fe" }}
         >
           <div
             className="flex items-center justify-center flex-col gap-3 rounded-tl-lg rounded-bl-lg"
-            style={{ width: "23%", height: "97vh", backgroundColor: "white" }}
+            style={{
+              position: "absolute",
+              left: 0,
+              width: "20%",
+              height: "97vh",
+              backgroundColor: "white",
+          
+            }}
           >
-            <h1 className="text-3xl font-sans font-bold absolute left-10 top-20">
-              hi {UserName}
-            </h1>
+            <h2 className="font-bold text-navy-700 dark:text-white text-2xl fixed left-10 top-40">
+              👋 Hey, {UserName}
+            </h2>
             <div
-              className="w-4/5 h-20  flex items-center justify-start gap-2 p-5 cursor-pointer rounded-tr-md rounded-br-md hover:scale-105"
+              className="w-4/5 h-20  flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105"
               style={{
-                backgroundColor: "#EBF4FF",
-                borderLeft: "4px solid #EF4444",
+                backgroundColor: "#f4f7fe",
               }}
               onclick={homenavclick}
               ref={homenav}
@@ -329,14 +335,16 @@ function Home() {
                 className="cursor-pointer"
                 src="https://cdn.lordicon.com/slduhdil.json"
                 trigger="hover"
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "22px", height: "22px" }}
               ></lord-icon>
-              <h1 className="text-xl font-sans font-bold cursor-pointer">
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
                 Home
               </h1>
             </div>
+
+            {/*job*/}
             <div
-              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer hover:border-l-4 border-red-500 rounded-tr-md rounded-br-md hover:scale-105 hover:bg-indigo-100"
+              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={jobnavclick}
               ref={jobnav}
             >
@@ -344,47 +352,48 @@ function Home() {
                 className="cursor-pointer"
                 src="https://cdn.lordicon.com/oezixobx.json"
                 trigger="hover"
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "22px", height: "22px" }}
               ></lord-icon>
-              <h1 className="text-xl font-sans font-bold cursor-pointer">
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
                 Jobs
               </h1>
             </div>
+
             <div
-              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer hover:border-l-4 border-red-500 rounded-tr-md rounded-br-md hover:scale-105 hover:bg-indigo-100"
+              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={meetingnavclick}
               ref={meetingnav}
             >
-              <span class="material-symbols-outlined font-extrabold text-3xl hover:scale-50 transition-transform">
+              <span class="material-symbols-outlined font-extrabold text-2xl hover:scale-50 transition-transform">
                 groups
               </span>
-              <h1 className="text-xl font-sans font-bold cursor-pointer">
+              <h1 className="font-bold text-navy-700 dark:text-white cursor-pointer">
                 Meetings
               </h1>
             </div>
             <div
-              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer hover:border-l-4 border-red-500 rounded-tr-md rounded-br-md hover:scale-105 hover:bg-indigo-100"
+              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={companynavclick}
               ref={companynav}
             >
-              <span class="material-symbols-outlined font-extrabold text-3xl hover:rotate-12 transition-transform">
+              <span class="material-symbols-outlined font-extrabold text-2xl hover:rotate-12 transition-transform">
                 business_center
               </span>
-              <h1 className="text-xl font-sans font-bold cursor-pointer">
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
                 Companies
               </h1>
             </div>
             <div
-              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer hover:border-l-4 border-red-500 rounded-tr-md rounded-br-md hover:scale-105 hover:bg-indigo-100"
+              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={settingsnavclick}
               ref={settingsnav}
             >
               <lord-icon
                 src="https://cdn.lordicon.com/dycatgju.json"
                 trigger="hover"
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "22px", height: "22px" }}
               ></lord-icon>
-              <h1 className="text-xl font-sans font-bold cursor-pointer">
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
                 Settings
               </h1>
             </div>
@@ -394,24 +403,26 @@ function Home() {
             style={{
               width: "52%",
               height: "97vh",
-              backgroundColor: "lavender",
+              backgroundColor: "#f4f7fe",
             }}
           >
-            <div
-              className="h-16 bg-white flex items-center justify-center rounded-full gap-2 cursor-pointer"
-              style={{ width: "90%" }}
-            >
-              <input
-                type="search"
-                className="w-4/5 p-3 caret-amber-500 font-sans font-bold outline-0"
-                placeholder="Search Jobs"
-              />
-              <lord-icon
-                className="cursor-pointer"
-                src="https://cdn.lordicon.com/rlizirgt.json"
-                trigger="hover"
-                style={{ width: "25px", height: "25px" }}
-              ></lord-icon>
+            <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[700px] xl:gap-2">
+              <div className="flex h-full items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[520px]">
+                <p className="pl-3 pr-2 text-xl">
+                  <lord-icon
+                    className="cursor-pointer h-5 w-4 text-gray-400 dark:text-white"
+                    src="https://cdn.lordicon.com/rlizirgt.json"
+                    trigger="hover"
+                    style={{ width: "25px", height: "25px" }}
+                  ></lord-icon>
+                </p>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="block h-full w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
+                />
+              </div>
+
               <lord-icon
                 className="cursor-pointer"
                 onClick={notified}
@@ -427,16 +438,18 @@ function Home() {
                 style={{ width: "25px", height: "25px" }}
               ></lord-icon>
             </div>
+
+{/* latest job card */}
             <div
-              className="w-4/6 h-60 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: "white" }}
+              className=" rounded-[20px] flex items-center justify-center"
+              style={{ backgroundColor: "white",width:"56rem",height:"20rem",marginRight:"5rem" }}
             >
               <div className="w-3/5 h-full rounded-lg flex items-center justify-center flex-col">
                 <div className="w-auto h-auto ">
-                  <h1 className="text-2xl font-sans font-extrabold text-gray-900">
+                  <h1 className="text-2xl font-bold text-black md:text-3xl md:leading-[42 mt-70 pt-12">
                     FULLSTACK DEVELOPER
                   </h1>
-                  <h2 className="text-sm font-sans font-bold text-gray-700">
+                  <h2 className="pt-6 text-base font-medium text-gray-600">
                     We Need A FullStack Developer
                   </h2>
                 </div>
@@ -446,61 +459,67 @@ function Home() {
                   style={{ width: "90%" }}
                 >
                   <button
-                    className="w-1/2 h-10 bg-blue-700 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105"
+                    className="text-white linear rounded-xl bg-blue-700  px-8 py-2 text-center text-base font-semibold transition duration-200 hover:!bg-black/80 active:!bg-black/70 mb-20"
                     onClick={handleButtonClick}
                   >
                     APPLY
                   </button>
-                  <button className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105">
+                  <button className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105 mb-20">
                     LEARN MORE
                   </button>
                 </div>
               </div>
+
+
               <div className="w-2/5 h-full rounded-lg p-1">
                 <img src={fsd} alt="pic" className="h-full rounded-lg" />
               </div>
             </div>
+
+
+
             <div
-              className="rounded-lg flex items-center justify-center flex-col gap-1"
+              className="rounded-lg flex items-left justify-center flex-col gap-1 "
               style={{
-                width: "95%",
+        
+                width: "100%",
                 height: "52%",
-                backgroundColor: "lavender",
+                backgroundColor: "#f4f7fe",
               }}
             >
               <div
-                className="h-auto flex items-center justify-start gap-2 cursor-pointer"
+                className="mb-4 mt-5 flex flex-col justify-between px-4 md:flex-row md:items-center cursor-pointer"
                 style={{ width: "95%" }}
               >
-                <h1 className="text-base font-sans font-bold">
+                <h4 className="ml-1 text-2xl font-bold text-navy-700 dark:text-white">
                   Jobs Available
-                </h1>
+                </h4>
                 <h1 className="w-3/4">&nbsp;</h1>
                 <h1
-                  className="text-base font-sans font-bold hover:text-blue-700"
+                  className="ml-1 text-1xl font-semibold text-navy-700 dark:text-white"
                   onClick={jobnavclick}
                 >
                   See All
                 </h1>
               </div>
               <div
-                className="rounded-lg flex items-center justify-center flex-row gap-2"
+                className="rounded-[20px] flex items-center justify-center flex-row gap-2"
                 style={{ width: "95%", height: "90%" }}
               >
                 <div
-                  className="bg-white rounded-lg p-1"
+                  className="bg-white rounded-[15px] p-1"
                   style={{ width: "31.666%", height: "97%" }}
                 >
                   <img
                     src={fsdc}
                     alt="pic"
-                    className="h-2/5 w-full rounded-tl-lg rounded-tr-lg"
+                    className="h-2/5  pl-6 w-90 rounded-tl-lg rounded-tr-lg"
                   />
-                  <div className="w-full h-2/5 flex flex-col gap-1 p-1 bg-white">
-                    <h1 className="text-lg font-sans font-extrabold text-left ml-3 text-gray-900">
+                  <div className="w-full h-2/5 ml-5 flex flex-col gap-4 p-1 bg-white">
+                    <h1 className="text-lg font-sans font-bold text-left ml-5  text-gray-900 ">
                       FULLSTACK DEVELOPER
                     </h1>
-                    <h1 className="text-sm font-sans font-bold ml-2 text-gray-700">
+                    <h1 className="text-sm font-kern font-semibold ml-5 pr-5 text-gray-700">
                       Aither Technology is looking for talented software
                       developers
                     </h1>
@@ -535,19 +554,19 @@ function Home() {
                   </div>
                 </div>
                 <div
-                  className="bg-white rounded-lg p-1"
+                  className="bg-white rounded-[15px] p-1"
                   style={{ width: "31.666%", height: "97%" }}
                 >
                   <img
                     src={fsdc}
                     alt="pic"
-                    className="h-2/5 w-full rounded-tl-lg rounded-tr-lg"
+                    className="h-2/5  pl-6 w-90 rounded-tl-lg rounded-tr-lg"
                   />
-                  <div className="w-full h-2/5 flex flex-col gap-1 p-1 bg-white">
-                    <h1 className="text-xl font-sans font-extrabold text-left ml-3 text-gray-900">
+                  <div className="w-full h-2/5 flex flex-col gap-4 p-1 bg-white">
+                    <h1 className="text-xl font-sans font-bold text-left ml-5 text-gray-900">
                       FULLSTACK DEVELOPER
                     </h1>
-                    <h1 className="text-sm font-sans font-bold ml-2 text-gray-700">
+                    <h1 className="text-sm font-kern font-semibold ml-5 pr-5 text-gray-700">
                       Aither Technology is looking for talented software
                       developers
                     </h1>
@@ -582,19 +601,19 @@ function Home() {
                   </div>
                 </div>
                 <div
-                  className="bg-white rounded-lg p-1"
+                  className="bg-white rounded-[15px] p-1"
                   style={{ width: "31.666%", height: "97%" }}
                 >
                   <img
                     src={fsdc}
                     alt="pic"
-                    className="h-2/5 w-full rounded-tl-lg rounded-tr-lg"
+                    className="h-2/5 pl-6 w-90 rounded-tl-lg "
                   />
-                  <div className="w-full h-2/5 flex flex-col gap-1 p-1 bg-white">
-                    <h1 className="text-xl font-sans font-extrabold text-left ml-3 text-gray-900">
+                  <div className="w-full h-2/5 flex flex-col gap-4 p-1 bg-white">
+                    <h1 className="text-xl font-sans font-bold text-left ml-5 text-gray-900">
                       FULLSTACK DEVELOPER
                     </h1>
-                    <h1 className="text-sm font-sans font-bold ml-2 text-gray-700">
+                    <h1 className="text-sm font-kern font-semibold ml-5 pr-5 text-gray-700">
                       Aither Technology is looking for talented software
                       developers
                     </h1>
@@ -633,15 +652,22 @@ function Home() {
           </div>
           <div
             className="bg-white flex items-center justify-center rounded-tr-lg rounded-br-lg"
-            style={{ width: "24%", height: "97vh" }}
+            style={{
+              position: "absolute",
+              right: 0,
+              width: "25%",
+              height: "97vh",
+              backgroundColor: "white",
+          
+            }}
           >
             {IsNotified ? (
               <div
-                className="shadow-md flex items-center justify-center flex-col gap-4 rounded-lg"
+                className=" flex items-center justify-center flex-col gap-4 rounded-lg"
                 style={{
-                  width: "90%",
+                  width: "100%",
                   height: "93vh",
-                  backgroundColor: "#fffff0",
+                  backgroundColor: "white",
                 }}
               >
                 <img src={fsdc} alt="pic" className="h-2/6" />

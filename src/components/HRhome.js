@@ -5,12 +5,18 @@ import { Link } from 'react-router-dom';
 
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../components/navbar/index.jsx";
 
 
 
 const HrHome =()=> {
     const [open ,setOpen] = useState(true);
+
+
+
+
+
+
     return(
 
         <div className="flex w-screen h-screen">   
@@ -28,6 +34,10 @@ const HrHome =()=> {
       rel="stylesheet"/>
 
             </Helmet>
+            <div className="h-full">
+            <Navbar
+              onOpenSidenav={() => setOpen(true)}
+            />
                 <span class={`material-icons-outlined absolute cursor-pointer -right-3 top-9 border-2
                  border-gray-600 bg-white rounded-full ${!open && "rotate-180"}`}
                 onClick={()=>setOpen(!open)}>
@@ -166,6 +176,8 @@ const HrHome =()=> {
                     
 
                     
+            </div>
+     
             </div>
         </div>
     

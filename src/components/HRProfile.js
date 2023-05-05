@@ -1,6 +1,57 @@
 import React from 'react';
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+
+  
 
 const CompanyProfile = () => {
+const [hr, setUser] = useState({});
+const [isLoading, setIsLoading] = useState(true);
+const MyUserId = localStorage.getItem("hr");
+const navigate = useNavigate();
+
+const fetchUser = async () => {
+    await axios
+      .post(`${URL}hr/getUser`, {
+        hrId: MyUserId,
+      })
+      .then((res) => {
+        console.log({ res: res });
+        setUser(res.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchUser();
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+
+
+
+    const signoutclick = (event) => {
+        localStorage.removeItem("hr");
+        localStorage.removeItem("hr-auth-key");
+    
+        event.preventDefault();
+        navigate("/"); 
+
+    window.location.reload();
+};
+
+
+
+
+
+
+
+
+
   return (
     <div className="bg-white  w-screen h-screen justify-center p-1">
         <div className="  container border-4 h-25 w-screen bg-sky-900 gap-x-4 ">  
@@ -15,7 +66,9 @@ const CompanyProfile = () => {
                             <button className="bg-white hover:bg-blue-700 text-sky-900 font-bold py-2 px-4 rounded ">
                                 Edit
                             </button>
-                            <button className="bg-white hover:bg-blue-700 text-sky-900 font-bold py-2 px-4 rounded ">
+                            <button className="bg-white hover:bg-blue-700 text-sky-900 font-bold py-2 px-4 rounded "
+                            onClick={signoutclick}
+                            >
                                 Back
                             </button>
                             </div>

@@ -2,6 +2,7 @@ body{
     margin:0;
     box-sizing:border-box;
     font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fe;
 }
 .notifiedground::-webkit-scrollbar {
     background-color:white;
@@ -19,3 +20,7 @@ body{
     background-color:gold;
     border-radius:10px;
   }
+  .hover\:bg-f4f7fe:hover {
+    background-color: #f4f7fe;
+  }
+  
