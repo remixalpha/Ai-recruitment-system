@@ -1,6 +1,6 @@
-import "../css/user/UserHome.css";
-import fsd from "../assets/fsd.jpg";
-import fsdc from "../assets/job1.png";
+import "../../css/user/UserHome.css";
+import fsd from "../../assets/fsd.jpg";
+import fsdc from "../../assets/job1.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,6 +13,7 @@ function Home() {
   const navigate = useNavigate();
   const homenav = useRef(null);
   const jobnav = useRef(null);
+  const jobappnav = useRef(null);
   const meetingnav = useRef(null);
   const companynav = useRef(null);
   const settingsnav = useRef(null);
@@ -60,75 +61,75 @@ function Home() {
     navigate("/jobapp");
   };
 
-  function JobAlert(props) {
-    return (
-      <div
-        className="w-full bg-stone-100 flex items-center justify-center border-t-2 p-1 cursor-pointer"
-        style={{ height: "17%" }}
-      >
-        <div
-          className="h-full flex items-center justify-center"
-          style={{ width: "15%" }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 0 24 24"
-            width="24px"
-            fill="lightgreen"
-          >
-            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
-          </svg>
-        </div>
-        <div
-          className="h-full flex items-start justify-center flex-col gap-2"
-          style={{ width: "70%" }}
-        >
-          <h1 className="text-base font-sans font-bold text-emerald-700">
-            {props.title}
-          </h1>
-          <h5 className="text-xs font-sans font-bold text-zinc-500">
-            {props.time}
-          </h5>
-        </div>
-        <div
-          className="h-full flex items-center justify-center"
-          style={{ width: "15%" }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 0 24 24"
-            width="24px"
-            fill="tomato"
-            onClick={props.onDelete}
-          >
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-          </svg>
-        </div>
-      </div>
-    );
-  }
+  // function JobAlert(props) {
+  //   return (
+  //     <div
+  //       className="w-full bg-stone-100 flex items-center justify-center border-t-2 p-1 cursor-pointer"
+  //       style={{ height: "17%" }}
+  //     >
+  //       <div
+  //         className="h-full flex items-center justify-center"
+  //         style={{ width: "15%" }}
+  //       >
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           height="24px"
+  //           viewBox="0 0 24 24"
+  //           width="24px"
+  //           fill="lightgreen"
+  //         >
+  //           <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+  //         </svg>
+  //       </div>
+  //       <div
+  //         className="h-full flex items-start justify-center flex-col gap-2"
+  //         style={{ width: "70%" }}
+  //       >
+  //         <h1 className="text-base font-sans font-bold text-emerald-700">
+  //           {props.title}
+  //         </h1>
+  //         <h5 className="text-xs font-sans font-bold text-zinc-500">
+  //           {props.time}
+  //         </h5>
+  //       </div>
+  //       <div
+  //         className="h-full flex items-center justify-center"
+  //         style={{ width: "15%" }}
+  //       >
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           height="24px"
+  //           viewBox="0 0 24 24"
+  //           width="24px"
+  //           fill="tomato"
+  //           onClick={props.onDelete}
+  //         >
+  //           <path d="M0 0h24v24H0z" fill="none" />
+  //           <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+  //         </svg>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  function JobAlertList() {
-    const [jobAlerts, setJobAlerts] = useState([
-      {
-        id: 1,
-        title: "Your Job Alert For Frontend Developer In Bengaluru",
-        time: "1d 15h",
-      },
-      {
-        id: 2,
-        title: "Your Job Alert For Backend Developer In Mumbai",
-        time: "2d 5h",
-      },
-      {
-        id: 3,
-        title: "Your Job Alert For Full Stack Developer In Delhi",
-        time: "1d 5h",
-      },
-    ]);
+  // function JobAlertList() {
+  //   const [jobAlerts, setJobAlerts] = useState([
+  //     {
+  //       id: 1,
+  //       title: "Your Job Alert For Frontend Developer In Bengaluru",
+  //       time: "1d 15h",
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "Your Job Alert For Backend Developer In Mumbai",
+  //       time: "2d 5h",
+  //     },
+  //     {
+  //       id: 3,
+  //       title: "Your Job Alert For Full Stack Developer In Delhi",
+  //       time: "1d 5h",
+  //     },
+  //   ]);
 
     const [selectedAlert, setSelectedAlert] = useState(null);
 
@@ -242,6 +243,20 @@ function Home() {
     event.preventDefault();
     navigate("/jobs");
   };
+  const jobappnavclick = (event) => {
+    jobnav.current.style.borderLeft = "4px solid #EF4444";
+    jobnav.current.style.backgroundColor = "#fff";
+    homenav.current.style.borderLeft = "none";
+    homenav.current.style.backgroundColor = "white";
+    meetingnav.current.style.borderLeft = "none";
+    meetingnav.current.style.backgroundColor = "white";
+    companynav.current.style.borderLeft = "none";
+    companynav.current.style.backgroundColor = "white";
+    settingsnav.current.style.borderLeft = "none";
+    settingsnav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/jobapped");
+  };
   const meetingnavclick = (event) => {
     meetingnav.current.style.borderLeft = "4px solid #EF4444";
     meetingnav.current.style.backgroundColor = "#fff";
@@ -295,6 +310,7 @@ function Home() {
             justifyContent: "center",
           }}
         >
+         
           <div>
             <lord-icon
               src="https://cdn.lordicon.com/oezixobx.json"
@@ -341,8 +357,7 @@ function Home() {
                 Home
               </h1>
             </div>
-
-            {/*job*/}
+{/*job*/}
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={jobnavclick}
@@ -358,6 +373,23 @@ function Home() {
                 Jobs
               </h1>
             </div>
+ {/*jobApplyed*/}
+            <div
+              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
+              onClick={jobappnavclick}
+              ref={jobappnav}
+            >
+              <lord-icon
+                className="cursor-pointer"
+                src="https://cdn.lordicon.com/oezixobx.json"
+                trigger="hover"
+                style={{ width: "22px", height: "22px" }}
+              ></lord-icon>
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
+                JobApplyed
+              </h1>
+            </div>
+
 
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
@@ -423,21 +455,48 @@ function Home() {
                 />
               </div>
 
+    {/* start Notification */}
+    <Dropdown
+    button={
+      <p className="cursor-pointer">
               <lord-icon
-                className="cursor-pointer"
-                onClick={notified}
                 src="https://cdn.lordicon.com/msetysan.json"
                 trigger="hover"
                 style={{ width: "25px", height: "25px" }}
-              ></lord-icon>
+              />
+            </p>
+          }
+                animation="origin-[65%_0%] md:origin-top-right transition-all duration-300 ease-in-out"
+          children={
+            <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-white p-4 shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:text-white dark:shadow-none sm:w-[460px]">
+              <div className="flex items-center justify-between">
+                <p className="text-base font-bold text-navy-700 dark:text-white">
+                  Notification
+                </p>
+                <p className="text-sm font-bold text-navy-700 dark:text-white">
+                  Mark all read
+                </p>
+              </div>
+          
+            
+            <p className="cursor-pointer">
               <lord-icon
                 className="cursor-pointer"
                 onClick={profileclick}
                 src="https://cdn.lordicon.com/hbvyhtse.json"
                 trigger="hover"
                 style={{ width: "25px", height: "25px" }}
-              ></lord-icon>
-            </div>
+              />
+                 </p>
+        </div>
+      }
+      />
+          
+
+
+
+
+            
 
 {/* latest job card */}
             <div
@@ -753,9 +812,12 @@ function Home() {
             )}
           </div>
         </div>
-      )}
     </div>
-  );
-}
+     
+      )
+      )};
+              
+
 
 export default Home;
+

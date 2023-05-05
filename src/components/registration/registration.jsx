@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Tab } from "@headlessui/react";
 import axios from "axios";
-import "../css/registration.css";
+import "../../css/Registration/registration.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Header from "../partials/Header";
-import PageIllustration from "../partials/PageIllustration";
+import Header from "../../partials/Header";
+import PageIllustration from "../../partials/PageIllustration";
 
 function Registration() {
   const [firstName, setFirstName] = useState("");

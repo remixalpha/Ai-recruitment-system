@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import conf from "../src/assets/conf.jpg";
-import Navbar from "./components/Navbar";
+import conf from "../../assets/conf.jpg";
+import Navbar from "../Navbar";
 
-const Home = () => {
+const MeetHome = () => {
   const [RoomCode, setRoomCode] = useState("");
   const navigate = useNavigate();
 
@@ -66,4 +66,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default MeetHome;

@@ -4,26 +4,38 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Signin from "./pages/SignIn";
 import Signup from "./pages/SignUp";
-import Meethome from "./Home";
-import Room from "./Room";
-import QuestionBox from "./components/QuestionBox";
 
-import HrHome from "./components/HRhome";
-import HrProfile from "./components/HRProfile";
-import JobApplication from "./components/JobApplication";
+//Login
+import LoginRegPage from "./components/login/LoginRegistrationPage";
+import LoginPage from "./components/login/Login";
 
-import LoginRegPage from "./components/LoginRegistrationPage";
-import LoginPage from "./components/Login";
-
-import UserHomePage from "./components/UserHome";
-import UserProf from "./components/UserProfile";
-import UserJobs from "./components/UserJobs";
-import UserMeetings from "./components/UserMeetings";
-import UserCompanies from "./components/UserCompanies";
-import UserSettings from "./components/UserSettings";
-
-import Registration from "./components/registration";
+//Registration page
+import Registration from "./components/registration/registration";
 import Resetpassword from "./pages/ResetPassword";
+
+//Quiz & Meet
+import Meethome from "./components/Meet/MeetHome";
+import Room from "./components/Meet/Room";
+import QuestionBox from "./components/Quiz/QuestionBox";
+
+//HR
+import HrHome from "./components/HR-pages/HRhome";
+import HRHome from "./components/HR-pages/marketplace/index";
+import HrProfile from "./components/HR-pages/HRProfile";
+import JobApplication from "./components/User-pages/JobApplication";
+
+
+
+
+import UserHomePage from "./components/User-pages/UserHome";
+import UserProf from "./components/User-pages/UserProfile";
+import UserJobs from "./components/User-pages/UserJobs";
+import UserJobApplyed from "./components/User-pages/JobApply";
+import UserMeetings from "./components/User-pages/UserMeetings";
+import UserCompanies from "./components/User-pages/UserCompanies";
+import UserSettings from "./components/User-pages/UserSettings";
+
+
 
 import "./css/style.css";
 
@@ -45,7 +57,7 @@ function App() {
     return (
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<HrHome />} />
+          <Route exact path="/" element={<HRHome />} />
           <Route exact path="/hr" element={<HrHome />} />
 
           <Route path="/meethome" element={<Meethome />} />
@@ -65,6 +77,7 @@ function App() {
           <Route exact path="/" element={<UserHomePage />} />
           <Route path="/profile" element={<UserProf />} />
           <Route path="/jobs" element={<UserJobs />} />
+          <Route path="/jobapped" element={<UserJobApplyed />} />
           <Route path="/meetings" element={<UserMeetings />} />
           <Route path="/companies" element={<UserCompanies />} />
           <Route path="/settings" element={<UserSettings />} />

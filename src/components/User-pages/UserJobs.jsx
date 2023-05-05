@@ -1,7 +1,7 @@
-import '../UserJobs.css';
+import '../../css/user/UserJobs.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import fsd from '../assets/fsd.png'
+import fsd from '../../assets/fsd.png'
 
 
 function Jobs(){

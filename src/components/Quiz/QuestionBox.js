@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import {quiz} from '../quiz.js'
-import '../../src/QuestionBox.css'
+import {quiz} from '../Quiz/quiz'
+import '../../css/Quiz/QuestionBox.css'
 import { Link } from 'react-router-dom';
-import Navbar from './Navbar.js';
+import Navbar from '../Navbar';
 
 const QuestionBox = () => {
   const [activeQuestion, setActiveQuestion] = useState(0)

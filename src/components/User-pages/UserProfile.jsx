@@ -1,4 +1,4 @@
-import "../UserProfile.css";
+import "../../css/user/UserProfile.css";
 import { useState, useEffect, useRef } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useNavigate } from "react-router-dom";

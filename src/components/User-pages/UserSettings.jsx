@@ -1,4 +1,4 @@
-import './UserSettings.css';
+import '../../css/user/UserSettings.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

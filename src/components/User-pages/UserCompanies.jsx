@@ -1,4 +1,4 @@
-import '../UserCompanies.css';
+import "../../css/user/UserCompanies.css";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
