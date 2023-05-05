@@ -4,6 +4,7 @@ import fsdc from "../../assets/job1.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Dropdown from "../dropdown/index";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -61,87 +62,12 @@ function Home() {
     navigate("/jobapp");
   };
 
-  function JobAlert(props) {
-    return (
-      <div
-        className="w-full bg-stone-100 flex items-center justify-center border-t-2 p-1 cursor-pointer"
-        style={{ height: "17%" }}
-      >
-        <div
-          className="h-full flex items-center justify-center"
-          style={{ width: "15%" }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 0 24 24"
-            width="24px"
-            fill="lightgreen"
-          >
-            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
-          </svg>
-        </div>
-        <div
-          className="h-full flex items-start justify-center flex-col gap-2"
-          style={{ width: "70%" }}
-        >
-          <h1 className="text-base font-sans font-bold text-emerald-700">
-            {props.title}
-          </h1>
-          <h5 className="text-xs font-sans font-bold text-zinc-500">
-            {props.time}
-          </h5>
-        </div>
-        <div
-          className="h-full flex items-center justify-center"
-          style={{ width: "15%" }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 0 24 24"
-            width="24px"
-            fill="tomato"
-            onClick={props.onDelete}
-          >
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-          </svg>
-        </div>
-      </div>
-    );
-  };
+  
 
-  function JobAlertList() {
-    const [jobAlerts, setJobAlerts] = useState([
-      {
-        id: 1,
-        title: "Your Job Alert For Frontend Developer In Bengaluru",
-        time: "1d 15h",
-      },
-      {
-        id: 2,
-        title: "Your Job Alert For Backend Developer In Mumbai",
-        time: "2d 5h",
-      },
-      {
-        id: 3,
-        title: "Your Job Alert For Full Stack Developer In Delhi",
-        time: "1d 5h",
-      },
-    ]);
-  };
     const [selectedAlert, setSelectedAlert] = useState(null);
 
-    const handleDelete = (id) => {
-      const updatedAlerts = jobAlerts.filter((alert) => alert.id !== id);
-      setJobAlerts(updatedAlerts);
-    };
+    
 
-    const handleSelect = (id) => {
-      const selected = jobAlerts.find((alert) => alert.id === id);
-      setSelectedAlert(selected);
-    };
     const homenavclick = (event) => {
       homenav.current.style.borderLeft = "4px solid #EF4444";
       homenav.current.style.backgroundColor = "#fff";
@@ -228,75 +154,6 @@ function Home() {
     };
     return (
       <div>
-        {jobAlerts.map((alert) => (
-          <div
-            key={alert.id}
-            className="flex items-center justify-center flex-col bg-stone-100"
-          >
-            <JobAlert
-              title={alert.title}
-              time={alert.time}
-              onDelete={() => handleDelete(alert.id)}
-            />
-            <button
-              onClick={() => handleSelect(alert.id)}
-              className="text-sm text-blue-700 font-bold pb-2"
-            >
-              View
-            </button>
-          </div>
-        ))}
-        {selectedAlert && (
-          <div className="w-full h-full fixed top-0 left-0 flex items-center justify-center backdrop-blur-sm">
-            <div
-              className="h-3/5 flex items-center flex-col p-6 gap-2 rounded-tl-lg rounded-tr-lg rounded-bl-lg rounded-br-lg"
-              style={{ width: "45%", backgroundColor: "white" }}
-            >
-              <h1 className="text-3xl font-bold text-blue-600">
-                {selectedAlert.title}
-              </h1>
-              <div className="notiexpand w-full h-3/4 overflow-scroll">
-                <h1 className="text-1xl font-bold text-gray-700">
-                  Qualifications
-                </h1>
-                <ul className="list-disc ml-10 text-base font-sans font-semibold text-gray-700">
-                  <li>React : 1 year (Required)</li>
-                  <li>Bachelor's (Preffered)</li>
-                  <li>Node Js : 1 year (Preffered)</li>
-                  <li>Cloud Computing : 1 year (Preffered)</li>
-                  <li>HTML,CSS,Javascript : 1 year (Preffered)</li>
-                </ul>
-                <h1 className="text-1xl font-bold text-gray-700">
-                  Full Job Description
-                </h1>
-                <ul className="list-disc ml-10 text-base font-sans font-semibold text-gray-700">
-                  <li>
-                    Responsible for development of new highly-responsive,
-                    web-based user interface
-                  </li>
-                  <li>Work and collaborate in a scrum structure</li>
-                  <li>
-                    Develop components and libraries that are reusable and
-                    future-proof
-                  </li>
-                  <li>
-                    Develop a flexible and well-structured APIs to support the
-                    system
-                  </li>
-                </ul>
-              </div>
-              <button
-                onClick={() => setSelectedAlert(null)}
-                className="w-full bg-blue-700 rounded-lg text-lg font-sans font-bold text-white tracking-wide"
-                style={{ height: "12%" }}
-              >
-                close
-              </button>
-            </div>
-          </div>
-
-        )}
-
 
 
 {isLoading ? (
@@ -788,12 +645,7 @@ function Home() {
                     Notifications
                   </h1>
                 </div>
-                <div
-                  className="notifiedground w-full mt-2 border-gray-600 flex items-center flex-col gap-4"
-                  style={{ height: "80%", overflow: "scroll" }}
-                >
-                  <JobAlertList />
-                </div>
+            
                 <div
                   className="w-full rounded-bl-lg rounded-br -lg flex items-center justify-center gap-2"
                   style={{ height: "10%" }}
