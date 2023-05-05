@@ -28,6 +28,16 @@ const Navbar = (props: {
 
   const navigate = useNavigate();
 
+  //signout
+const signoutclick = (event) => {
+  localStorage.removeItem("hr");
+  localStorage.removeItem("hr-auth-key");
+
+  event.preventDefault();
+  navigate("/");
+  window.location.reload();
+};
+
   const profileclick = (event) => {
     event.preventDefault();
     navigate("/hrPro");
@@ -97,7 +107,7 @@ const Navbar = (props: {
                 </div>
                 <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
                   <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
-                    New Update: Horizon UI Dashboard PRO
+                    New Update: jobee PRO is available
                   </p>
                   <p className="font-base text-left text-xs text-gray-900 dark:text-white">
                     A new update for your downloaded item is available!
@@ -145,7 +155,7 @@ const Navbar = (props: {
                 href="https://horizon-ui.com/pro?ref=live-free-tailwind-react"
                 className="px-full linear flex cursor-pointer items-center justify-center rounded-xl bg-brand-500 py-[11px] font-bold text-white transition duration-200 hover:bg-brand-600 hover:text-white active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
               >
-                Buy Horizon UI PRO
+                Buy jobee PRO
               </a>
               <a
                 target="blank"
@@ -159,7 +169,7 @@ const Navbar = (props: {
                 href="https://horizon-ui.com/?ref=live-free-tailwind-react"
                 className="hover:bg-black px-full linear flex cursor-pointer items-center justify-center rounded-xl py-[11px] font-bold text-navy-700 transition duration-200 hover:text-navy-700 dark:text-white dark:hover:text-white"
               >
-                Try Horizon Free
+                Try jobee Free
               </a>
             </div>
           }
@@ -198,7 +208,7 @@ const Navbar = (props: {
               <div className="mt-3 ml-4">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-navy-700 dark:text-white">
-                    👋 Hey, Adela
+                    👋 Hei, {}
                   </p>{" "}
                 </div>
               </div>
@@ -216,11 +226,12 @@ const Navbar = (props: {
                   href=" "
                   className="mt-3 text-sm text-gray-800 dark:text-white hover:dark:text-white"
                 >
-                  Newsletter Settings
+                  Job details
                 </a>
                 <a
                   href=" "
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
+                  onClick={signoutclick}
                 >
                   Log Out
                 </a>

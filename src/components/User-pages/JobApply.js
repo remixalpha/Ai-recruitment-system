@@ -1,6 +1,8 @@
 import { useEffect,useState,useRef } from "react";
 import '../../css/user/JobApply.css';
+import { useNavigate } from "react-router-dom";
 function JobApply(){
+  const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [istabed, setIstabed] = useState(true);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -35,6 +37,13 @@ function JobApply(){
       tab1clr.current.style.color = '#202020';
       tab1clr.current.style.borderBottomColor = 'gray';
     }
+
+    //signout
+const exit = (event) => {
+  event.preventDefault();
+  navigate("/");
+  window.location.reload();
+};
     return(
         <div>
             {isLoading ? (
@@ -56,7 +65,7 @@ function JobApply(){
                             <li className="text-base font-sans font-semibold ml-4" >Home</li>
                             <li className="text-base font-sans font-semibold ml-4" >Profile</li>
                             <li className="text-base font-sans font-semibold ml-4" >Companies</li>
-                            <li className="text-base font-sans font-semibold ml-4">Sign out</li>
+                            <li className="text-base font-sans font-semibold ml-4" onClick={exit}>Exit</li>
                         </ul>
                     </nav>
                     <div className="w-full h-full p-3 flex items-center justify-center flex-col py-10">

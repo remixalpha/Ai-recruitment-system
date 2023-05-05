@@ -15,6 +15,7 @@ function Home() {
   const homenav = useRef(null);
   const jobnav = useRef(null);
   const jobappnav = useRef(null);
+  const quiznav = useRef(null);
   const meetingnav = useRef(null);
   const companynav = useRef(null);
   const settingsnav = useRef(null);
@@ -122,7 +123,21 @@ function Home() {
       settingsnav.current.style.borderLeft = "none";
       settingsnav.current.style.backgroundColor = "white";
       event.preventDefault();
-      navigate("/meetings");
+      navigate("/meethome");
+    };
+    const quiznavclick = (event) => {
+      meetingnav.current.style.borderLeft = "4px solid #EF4444";
+      meetingnav.current.style.backgroundColor = "#fff";
+      jobnav.current.style.borderLeft = "none";
+      jobnav.current.style.backgroundColor = "white";
+      homenav.current.style.borderLeft = "none";
+      homenav.current.style.backgroundColor = "white";
+      companynav.current.style.borderLeft = "none";
+      companynav.current.style.backgroundColor = "white";
+      settingsnav.current.style.borderLeft = "none";
+      settingsnav.current.style.backgroundColor = "white";
+      event.preventDefault();
+      navigate("/assesmentest");
     };
     const companynavclick = (event) => {
       companynav.current.style.borderLeft = "4px solid #EF4444";
@@ -191,7 +206,7 @@ function Home() {
           
             }}
           >
-            <h2 className="font-bold text-navy-700 dark:text-white text-2xl fixed left-10 top-40">
+            <h2 className="font-bold text-navy-700 dark:text-white text-2xl fixed left-10 top-20">
               👋 Hey, {UserName}
             </h2>
             <div
@@ -258,6 +273,21 @@ function Home() {
                 Meetings
               </h1>
             </div>
+
+            <div
+              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
+              onClick={quiznavclick}
+              ref={quiznav}
+            >
+              <span class="material-symbols-outlined font-extrabold text-2xl hover:scale-50 transition-transform">
+                groups
+              </span>
+              <h1 className="font-bold text-navy-700 dark:text-white cursor-pointer">
+                Quiz
+              </h1>
+            </div>
+
+
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={companynavclick}
@@ -285,6 +315,8 @@ function Home() {
               </h1>
             </div>
           </div>
+
+
           <div
             className="flex items-center justify-center flex-col gap-4"
             style={{
@@ -332,9 +364,9 @@ function Home() {
                   Mark all read
                 </p>
               </div>
-          
-            
-            <p className="cursor-pointer">
+              <button className="flex w-full items-center">
+                <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
+                <p className="cursor-pointer">
               <lord-icon
                 className="cursor-pointer"
                 onClick={profileclick}
@@ -343,9 +375,54 @@ function Home() {
                 style={{ width: "25px", height: "25px" }}
               />
                  </p>
+                </div>
+                <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                  <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
+                    Apple
+                  </p>
+                  <p className="font-base text-left text-xs text-gray-900 dark:text-white">
+                    Your front-end Developer apply has been Approved
+                    Interview date will be 12-03-2020
+                  </p>
+                </div>
+              </button>
+
+              <button className="flex w-full items-center">
+                <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
+                <p className="cursor-pointer">
+              <lord-icon
+                className="cursor-pointer"
+              
+                src="https://cdn.lordicon.com/hbvyhtse.json"
+                trigger="hover"
+                style={{ width: "25px", height: "25px" }}
+              />
+                 </p>
+                </div>
+                <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                  <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
+                    Jobee
+                  </p>
+                  <p className="font-base text-left text-xs text-gray-900 dark:text-white">
+                     Your Application for Designer has been Approved
+                     Interview date will be 08-11-2020
+                  </p>
+                </div>
+              </button>
         </div>
       }
       />
+      <p className="cursor-pointer">
+              <lord-icon
+                className="cursor-pointer"
+                onClick={profileclick}
+               
+                src="https://cdn.lordicon.com/hbvyhtse.json"
+                trigger="hover"
+                style={{ width: "25px", height: "25px" }}
+              />
+                 </p>
+      </div>
           
 
 
@@ -378,7 +455,8 @@ function Home() {
                   >
                     APPLY
                   </button>
-                  <button className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105 mb-20">
+                  <button className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105 mb-20"
+                  onClick={jobappnavclick}>
                     LEARN MORE
                   </button>
                 </div>
@@ -553,6 +631,8 @@ function Home() {
                       trigger="hover"
                       style={{ width: "25px", height: "25px" }}
                     ></lord-icon>
+                     
+           
                     <button
                       className="p-1 bg-blue-700 text-base font-sans font-semibold tracking-wide text-white rounded-lg hover:scale-105"
                       style={{ width: "45%" }}
@@ -564,6 +644,8 @@ function Home() {
               </div>
             </div>
           </div>
+
+        
           <div
             className="bg-white flex items-center justify-center rounded-tr-lg rounded-br-lg"
             style={{
@@ -617,6 +699,7 @@ function Home() {
                   <button
                     className="h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105"
                     style={{ width: "50%" }}
+                    onClick={jobappnavclick}
                   >
                     LEARN MORE
                   </button>
@@ -628,6 +711,8 @@ function Home() {
                   </button>
                 </div>
               </div>
+
+
             ) : (
               <div
                 className="shadow-md flex items-center flex-col gap-2 rounded-lg"
@@ -662,8 +747,7 @@ function Home() {
             )}
           </div>
         </div>
-    </div>
-
+  
 
       
     )}

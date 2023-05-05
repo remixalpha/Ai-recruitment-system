@@ -60,15 +60,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<HRHome />} />
-       
-
-          <Route path="/meethome" element={<Meethome />} />
-          <Route path="/room/:roomID" element={<Room />} />
-          <Route exact path="/assesmentest" element={<QuestionBox />} />
 
           <Route path="/hrPro" element={<HrProfile />} />
           <Route path="/jobapp" element={<JobApplication />} />
           <Route path="/jobpost" element={<JobPosting />} />
+          <Route path="/meethome" element={<Meethome />} />
+          <Route path="/room/:roomID" element={<Room />} />
 
         </Routes>
       </BrowserRouter>
@@ -82,9 +79,12 @@ function App() {
           <Route path="/profile" element={<UserProf />} />
           <Route path="/jobs" element={<UserJobs />} />
           <Route path="/jobapped" element={<UserJobApplyed />} />
-          <Route path="/meetings" element={<UserMeetings />} />
           <Route path="/companies" element={<UserCompanies />} />
           <Route path="/settings" element={<UserSettings />} />
+
+          <Route path="/meethome" element={<Meethome />} />
+          <Route path="/room/:roomID" element={<Room />} />
+          <Route exact path="/assesmentest" element={<QuestionBox />} />
         </Routes>
       </BrowserRouter>
     );

@@ -27,6 +27,11 @@ function JobPosting(){
             event.preventDefault();
             navigate('/companies');
         }
+
+        const exitclick = (event) => {
+            event.preventDefault();
+            navigate("/");
+          };
         const signoutclick = (event) => {
             event.preventDefault();
             navigate('/');
@@ -70,7 +75,7 @@ function JobPosting(){
                             <li className="text-base font-sans font-semibold ml-4" onClick={homeclick}>Home</li>
                             <li className="text-base font-sans font-semibold ml-4" onClick={jobclick}>Openings</li>
                             <li className="text-base font-sans font-semibold ml-4" onClick={comapniesclick}>Meetings</li>
-                            <li className="text-base font-sans font-semibold ml-4" onClick={signoutclick}>Sign out</li>
+                            <li className="text-base font-sans font-semibold ml-4" onClick={exitclick}>exit</li>
                         </ul>
                     </nav>
                     <div className='w-full h-full flex items-start justify-center flex-col'>
