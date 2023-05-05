@@ -124,10 +124,10 @@ const Navbar = (props: {
         />
         {/* start Horizon PRO */}
         <Dropdown
-        onClick={profileclick}
+        
           button={
             <p className="cursor-pointer">
-              <IoMdInformationCircleOutline className="h-4 w-4 text-gray-600 dark:text-white" />
+              <IoMdInformationCircleOutline  className="h-4 w-4 text-gray-600 dark:text-white" />
             </p>
           }
           children={
@@ -208,6 +208,7 @@ const Navbar = (props: {
                 <a
                   href=" "
                   className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
+                  onClick={profileclick}
                 >
                   Profile Settings
                 </a>

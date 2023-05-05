@@ -23,6 +23,8 @@ import HrHome from "./components/HR-pages/HRhome";
 import HRHome from "./components/HR-pages/marketplace/index";
 import HrProfile from "./components/HR-pages/HRProfile";
 import JobApplication from "./components/User-pages/JobApplication";
+import JobPosting from "./components/HR-pages/JobPosting";
+
 
 
 
@@ -58,7 +60,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<HRHome />} />
-          <Route exact path="/hr" element={<HrHome />} />
+       
 
           <Route path="/meethome" element={<Meethome />} />
           <Route path="/room/:roomID" element={<Room />} />
@@ -66,6 +68,8 @@ function App() {
 
           <Route path="/hrPro" element={<HrProfile />} />
           <Route path="/jobapp" element={<JobApplication />} />
+          <Route path="/jobpost" element={<JobPosting />} />
+
         </Routes>
       </BrowserRouter>
     );

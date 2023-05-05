@@ -61,76 +61,76 @@ function Home() {
     navigate("/jobapp");
   };
 
-  // function JobAlert(props) {
-  //   return (
-  //     <div
-  //       className="w-full bg-stone-100 flex items-center justify-center border-t-2 p-1 cursor-pointer"
-  //       style={{ height: "17%" }}
-  //     >
-  //       <div
-  //         className="h-full flex items-center justify-center"
-  //         style={{ width: "15%" }}
-  //       >
-  //         <svg
-  //           xmlns="http://www.w3.org/2000/svg"
-  //           height="24px"
-  //           viewBox="0 0 24 24"
-  //           width="24px"
-  //           fill="lightgreen"
-  //         >
-  //           <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
-  //         </svg>
-  //       </div>
-  //       <div
-  //         className="h-full flex items-start justify-center flex-col gap-2"
-  //         style={{ width: "70%" }}
-  //       >
-  //         <h1 className="text-base font-sans font-bold text-emerald-700">
-  //           {props.title}
-  //         </h1>
-  //         <h5 className="text-xs font-sans font-bold text-zinc-500">
-  //           {props.time}
-  //         </h5>
-  //       </div>
-  //       <div
-  //         className="h-full flex items-center justify-center"
-  //         style={{ width: "15%" }}
-  //       >
-  //         <svg
-  //           xmlns="http://www.w3.org/2000/svg"
-  //           height="24px"
-  //           viewBox="0 0 24 24"
-  //           width="24px"
-  //           fill="tomato"
-  //           onClick={props.onDelete}
-  //         >
-  //           <path d="M0 0h24v24H0z" fill="none" />
-  //           <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-  //         </svg>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  function JobAlert(props) {
+    return (
+      <div
+        className="w-full bg-stone-100 flex items-center justify-center border-t-2 p-1 cursor-pointer"
+        style={{ height: "17%" }}
+      >
+        <div
+          className="h-full flex items-center justify-center"
+          style={{ width: "15%" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 0 24 24"
+            width="24px"
+            fill="lightgreen"
+          >
+            <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+          </svg>
+        </div>
+        <div
+          className="h-full flex items-start justify-center flex-col gap-2"
+          style={{ width: "70%" }}
+        >
+          <h1 className="text-base font-sans font-bold text-emerald-700">
+            {props.title}
+          </h1>
+          <h5 className="text-xs font-sans font-bold text-zinc-500">
+            {props.time}
+          </h5>
+        </div>
+        <div
+          className="h-full flex items-center justify-center"
+          style={{ width: "15%" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24px"
+            viewBox="0 0 24 24"
+            width="24px"
+            fill="tomato"
+            onClick={props.onDelete}
+          >
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+          </svg>
+        </div>
+      </div>
+    );
+  };
 
-  // function JobAlertList() {
-  //   const [jobAlerts, setJobAlerts] = useState([
-  //     {
-  //       id: 1,
-  //       title: "Your Job Alert For Frontend Developer In Bengaluru",
-  //       time: "1d 15h",
-  //     },
-  //     {
-  //       id: 2,
-  //       title: "Your Job Alert For Backend Developer In Mumbai",
-  //       time: "2d 5h",
-  //     },
-  //     {
-  //       id: 3,
-  //       title: "Your Job Alert For Full Stack Developer In Delhi",
-  //       time: "1d 5h",
-  //     },
-  //   ]);
-
+  function JobAlertList() {
+    const [jobAlerts, setJobAlerts] = useState([
+      {
+        id: 1,
+        title: "Your Job Alert For Frontend Developer In Bengaluru",
+        time: "1d 15h",
+      },
+      {
+        id: 2,
+        title: "Your Job Alert For Backend Developer In Mumbai",
+        time: "2d 5h",
+      },
+      {
+        id: 3,
+        title: "Your Job Alert For Full Stack Developer In Delhi",
+        time: "1d 5h",
+      },
+    ]);
+  };
     const [selectedAlert, setSelectedAlert] = useState(null);
 
     const handleDelete = (id) => {
@@ -142,7 +142,90 @@ function Home() {
       const selected = jobAlerts.find((alert) => alert.id === id);
       setSelectedAlert(selected);
     };
-
+    const homenavclick = (event) => {
+      homenav.current.style.borderLeft = "4px solid #EF4444";
+      homenav.current.style.backgroundColor = "#fff";
+      jobnav.current.style.borderLeft = "none";
+      jobnav.current.style.backgroundColor = "white";
+      meetingnav.current.style.borderLeft = "none";
+      meetingnav.current.style.backgroundColor = "white";
+      companynav.current.style.borderLeft = "none";
+      companynav.current.style.backgroundColor = "white";
+      settingsnav.current.style.borderLeft = "none";
+      settingsnav.current.style.backgroundColor = "white";
+      event.preventDefault();
+      navigate("/");
+    };
+    const jobnavclick = (event) => {
+      jobnav.current.style.borderLeft = "4px solid #EF4444";
+      jobnav.current.style.backgroundColor = "#fff";
+      homenav.current.style.borderLeft = "none";
+      homenav.current.style.backgroundColor = "white";
+      meetingnav.current.style.borderLeft = "none";
+      meetingnav.current.style.backgroundColor = "white";
+      companynav.current.style.borderLeft = "none";
+      companynav.current.style.backgroundColor = "white";
+      settingsnav.current.style.borderLeft = "none";
+      settingsnav.current.style.backgroundColor = "white";
+      event.preventDefault();
+      navigate("/jobs");
+    };
+    const jobappnavclick = (event) => {
+      jobnav.current.style.borderLeft = "4px solid #EF4444";
+      jobnav.current.style.backgroundColor = "#fff";
+      homenav.current.style.borderLeft = "none";
+      homenav.current.style.backgroundColor = "white";
+      meetingnav.current.style.borderLeft = "none";
+      meetingnav.current.style.backgroundColor = "white";
+      companynav.current.style.borderLeft = "none";
+      companynav.current.style.backgroundColor = "white";
+      settingsnav.current.style.borderLeft = "none";
+      settingsnav.current.style.backgroundColor = "white";
+      event.preventDefault();
+      navigate("/jobapped");
+    };
+    const meetingnavclick = (event) => {
+      meetingnav.current.style.borderLeft = "4px solid #EF4444";
+      meetingnav.current.style.backgroundColor = "#fff";
+      jobnav.current.style.borderLeft = "none";
+      jobnav.current.style.backgroundColor = "white";
+      homenav.current.style.borderLeft = "none";
+      homenav.current.style.backgroundColor = "white";
+      companynav.current.style.borderLeft = "none";
+      companynav.current.style.backgroundColor = "white";
+      settingsnav.current.style.borderLeft = "none";
+      settingsnav.current.style.backgroundColor = "white";
+      event.preventDefault();
+      navigate("/meetings");
+    };
+    const companynavclick = (event) => {
+      companynav.current.style.borderLeft = "4px solid #EF4444";
+      companynav.current.style.backgroundColor = "#fff";
+      jobnav.current.style.borderLeft = "none";
+      jobnav.current.style.backgroundColor = "white";
+      meetingnav.current.style.borderLeft = "none";
+      meetingnav.current.style.backgroundColor = "white";
+      homenav.current.style.borderLeft = "none";
+      homenav.current.style.backgroundColor = "white";
+      settingsnav.current.style.borderLeft = "none";
+      settingsnav.current.style.backgroundColor = "white";
+      event.preventDefault();
+      navigate("/companies");
+    };
+    const settingsnavclick = (event) => {
+      settingsnav.current.style.borderLeft = "4px solid #EF4444";
+      settingsnav.current.style.backgroundColor = "#fff";
+      jobnav.current.style.borderLeft = "none";
+      jobnav.current.style.backgroundColor = "white";
+      meetingnav.current.style.borderLeft = "none";
+      meetingnav.current.style.backgroundColor = "white";
+      companynav.current.style.borderLeft = "none";
+      companynav.current.style.backgroundColor = "white";
+      homenav.current.style.borderLeft = "none";
+      homenav.current.style.backgroundColor = "white";
+      event.preventDefault();
+      navigate("/settings");
+    };
     return (
       <div>
         {jobAlerts.map((alert) => (
@@ -211,97 +294,12 @@ function Home() {
               </button>
             </div>
           </div>
+
         )}
-      </div>
-    );
-  }
-  const homenavclick = (event) => {
-    homenav.current.style.borderLeft = "4px solid #EF4444";
-    homenav.current.style.backgroundColor = "#fff";
-    jobnav.current.style.borderLeft = "none";
-    jobnav.current.style.backgroundColor = "white";
-    meetingnav.current.style.borderLeft = "none";
-    meetingnav.current.style.backgroundColor = "white";
-    companynav.current.style.borderLeft = "none";
-    companynav.current.style.backgroundColor = "white";
-    settingsnav.current.style.borderLeft = "none";
-    settingsnav.current.style.backgroundColor = "white";
-    event.preventDefault();
-    navigate("/");
-  };
-  const jobnavclick = (event) => {
-    jobnav.current.style.borderLeft = "4px solid #EF4444";
-    jobnav.current.style.backgroundColor = "#fff";
-    homenav.current.style.borderLeft = "none";
-    homenav.current.style.backgroundColor = "white";
-    meetingnav.current.style.borderLeft = "none";
-    meetingnav.current.style.backgroundColor = "white";
-    companynav.current.style.borderLeft = "none";
-    companynav.current.style.backgroundColor = "white";
-    settingsnav.current.style.borderLeft = "none";
-    settingsnav.current.style.backgroundColor = "white";
-    event.preventDefault();
-    navigate("/jobs");
-  };
-  const jobappnavclick = (event) => {
-    jobnav.current.style.borderLeft = "4px solid #EF4444";
-    jobnav.current.style.backgroundColor = "#fff";
-    homenav.current.style.borderLeft = "none";
-    homenav.current.style.backgroundColor = "white";
-    meetingnav.current.style.borderLeft = "none";
-    meetingnav.current.style.backgroundColor = "white";
-    companynav.current.style.borderLeft = "none";
-    companynav.current.style.backgroundColor = "white";
-    settingsnav.current.style.borderLeft = "none";
-    settingsnav.current.style.backgroundColor = "white";
-    event.preventDefault();
-    navigate("/jobapped");
-  };
-  const meetingnavclick = (event) => {
-    meetingnav.current.style.borderLeft = "4px solid #EF4444";
-    meetingnav.current.style.backgroundColor = "#fff";
-    jobnav.current.style.borderLeft = "none";
-    jobnav.current.style.backgroundColor = "white";
-    homenav.current.style.borderLeft = "none";
-    homenav.current.style.backgroundColor = "white";
-    companynav.current.style.borderLeft = "none";
-    companynav.current.style.backgroundColor = "white";
-    settingsnav.current.style.borderLeft = "none";
-    settingsnav.current.style.backgroundColor = "white";
-    event.preventDefault();
-    navigate("/meetings");
-  };
-  const companynavclick = (event) => {
-    companynav.current.style.borderLeft = "4px solid #EF4444";
-    companynav.current.style.backgroundColor = "#fff";
-    jobnav.current.style.borderLeft = "none";
-    jobnav.current.style.backgroundColor = "white";
-    meetingnav.current.style.borderLeft = "none";
-    meetingnav.current.style.backgroundColor = "white";
-    homenav.current.style.borderLeft = "none";
-    homenav.current.style.backgroundColor = "white";
-    settingsnav.current.style.borderLeft = "none";
-    settingsnav.current.style.backgroundColor = "white";
-    event.preventDefault();
-    navigate("/companies");
-  };
-  const settingsnavclick = (event) => {
-    settingsnav.current.style.borderLeft = "4px solid #EF4444";
-    settingsnav.current.style.backgroundColor = "#fff";
-    jobnav.current.style.borderLeft = "none";
-    jobnav.current.style.backgroundColor = "white";
-    meetingnav.current.style.borderLeft = "none";
-    meetingnav.current.style.backgroundColor = "white";
-    companynav.current.style.borderLeft = "none";
-    companynav.current.style.backgroundColor = "white";
-    homenav.current.style.borderLeft = "none";
-    homenav.current.style.backgroundColor = "white";
-    event.preventDefault();
-    navigate("/settings");
-  };
-  return (
-    <div>
-      {isLoading ? (
+
+
+
+{isLoading ? (
         <div
           className="w-full bg-indigo-100 flex"
           style={{
@@ -813,10 +811,15 @@ function Home() {
           </div>
         </div>
     </div>
-     
-      )
-      )};
-              
+
+
+      
+    )}
+    </div>
+  )
+};
+  
+ 
 
 
 export default Home;

@@ -20,12 +20,46 @@ import NftCard from "../../card/NftCard";
 
 const Marketplace = () => {
   const navigate = useNavigate();
+  const [hr, setHr] = useState({});
+
+
+  const MyUserId = localStorage.getItem("hr");
+
+
+  const fetchUser = async () => {
+    await axios
+      .post(`${URL}hr/getUser`, {
+        userId: MyUserId,
+      })
+      .then((res) => {
+        console.log({ res: res });
+        setHr(res.data);
+      });
+  };
 
   const profileclick = (event) => {
     event.preventDefault();
-    navigate("/profile");
+    navigate("/");
   };
 
+  const jobpostclick = (event) => {
+    event.preventDefault();
+    navigate("/jobpost");
+  };
+
+
+//signout
+const signoutclick = (event) => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("user-auth-key");
+
+  event.preventDefault();
+  navigate("/");
+  window.location.reload();
+};
+
+
+  
   return (
     
     <div className="mt-3 ml-9 mr-9 grid h-full grid-cols-1 gap-5 xl:grid-cols-2 2x5:grid-cols-3">
@@ -35,6 +69,55 @@ const Marketplace = () => {
       <div className="h-full">
             <Navbar/>
       </div>
+      
+      <div
+            className="flex items-center justify-center flex-col gap-3 rounded-tl-lg rounded-bl-lg"
+            style={{
+              position: "absolute",
+              left: 0,
+              width: "20%",
+              height: "97vh",
+              backgroundColor: "white",
+          
+            }}
+          >
+            <h2 className="font-bold text-navy-700 dark:text-white text-2xl fixed left-10 top-40">
+              👋 Hey, {}
+            </h2>
+            <div
+              className="w-4/5 h-20  flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105"
+              style={{
+                backgroundColor: "#f4f7fe",
+              }}
+              onclick={jobpostclick}
+              
+            >
+              <lord-icon
+                className="cursor-pointer"
+                src="https://cdn.lordicon.com/slduhdil.json"
+                trigger="hover"
+                style={{ width: "22px", height: "22px" }}
+              ></lord-icon>
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
+                JobApply
+              </h1>
+            </div>
+
+            <div
+              className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
+              onClick={signoutclick}
+              
+            >
+              <lord-icon
+                src="https://cdn.lordicon.com/dycatgju.json"
+                trigger="hover"
+                style={{ width: "22px", height: "22px" }}
+              ></lord-icon>
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
+                Settings
+              </h1>
+            </div>
+          </div>
         {/* NFt Banner */}
         <Banner />
 
@@ -49,33 +132,10 @@ const Marketplace = () => {
                 className="text-base font-medium text-brand-500 hover:text-brand-500 dark:text-white"
                 href=" "
               >
-                Art
+                see all
               </a>
             </li>
-            <li>
-              <a
-                className="text-base font-medium text-brand-500 hover:text-brand-500 dark:text-white"
-                href=" "
-              >
-                Music
-              </a>
-            </li>
-            <li>
-              <a
-                className="text-base font-medium text-brand-500 hover:text-brand-500 dark:text-white"
-                href=" "
-              >
-                Collection
-              </a>
-            </li>
-            <li>
-              <a
-                className="text-base font-medium text-brand-500 hover:text-brand-500 dark:text-white"
-                href=" "
-              >
-                <a href=" ">Sports</a>
-              </a>
-            </li>
+
           </ul>
         </div>
 
