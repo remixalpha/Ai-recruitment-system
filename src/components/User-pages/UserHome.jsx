@@ -11,6 +11,8 @@ function Home() {
   const [isChecked, setIsChecked] = useState(true);
   const [IsNotified, setIsNotified] = useState(true);
   const [UserName, setUserName] = useState("");
+  const [job, setJob] = useState([]);
+
   const navigate = useNavigate();
   const homenav = useRef(null);
   const jobnav = useRef(null);
@@ -34,8 +36,17 @@ function Home() {
         setUserName(`${firstName} ${lastName}`);
       });
   };
+  const fetchJob = async () => {
+    await axios.post(`${URL}job/getAll`).then((res) => {
+      console.log({ res: res });
+
+      setJob(res.data?.doc);
+    });
+  };
   useEffect(() => {
     fetchUser();
+
+    fetchJob();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -63,115 +74,109 @@ function Home() {
     navigate("/jobapp");
   };
 
-  
+  const [selectedAlert, setSelectedAlert] = useState(null);
 
-    const [selectedAlert, setSelectedAlert] = useState(null);
-
-    
-
-    const homenavclick = (event) => {
-      homenav.current.style.borderLeft = "4px solid #EF4444";
-      homenav.current.style.backgroundColor = "#fff";
-      jobnav.current.style.borderLeft = "none";
-      jobnav.current.style.backgroundColor = "white";
-      meetingnav.current.style.borderLeft = "none";
-      meetingnav.current.style.backgroundColor = "white";
-      companynav.current.style.borderLeft = "none";
-      companynav.current.style.backgroundColor = "white";
-      settingsnav.current.style.borderLeft = "none";
-      settingsnav.current.style.backgroundColor = "white";
-      event.preventDefault();
-      navigate("/");
-    };
-    const jobnavclick = (event) => {
-      jobnav.current.style.borderLeft = "4px solid #EF4444";
-      jobnav.current.style.backgroundColor = "#fff";
-      homenav.current.style.borderLeft = "none";
-      homenav.current.style.backgroundColor = "white";
-      meetingnav.current.style.borderLeft = "none";
-      meetingnav.current.style.backgroundColor = "white";
-      companynav.current.style.borderLeft = "none";
-      companynav.current.style.backgroundColor = "white";
-      settingsnav.current.style.borderLeft = "none";
-      settingsnav.current.style.backgroundColor = "white";
-      event.preventDefault();
-      navigate("/jobs");
-    };
-    const jobappnavclick = (event) => {
-      jobnav.current.style.borderLeft = "4px solid #EF4444";
-      jobnav.current.style.backgroundColor = "#fff";
-      homenav.current.style.borderLeft = "none";
-      homenav.current.style.backgroundColor = "white";
-      meetingnav.current.style.borderLeft = "none";
-      meetingnav.current.style.backgroundColor = "white";
-      companynav.current.style.borderLeft = "none";
-      companynav.current.style.backgroundColor = "white";
-      settingsnav.current.style.borderLeft = "none";
-      settingsnav.current.style.backgroundColor = "white";
-      event.preventDefault();
-      navigate("/jobapped");
-    };
-    const meetingnavclick = (event) => {
-      meetingnav.current.style.borderLeft = "4px solid #EF4444";
-      meetingnav.current.style.backgroundColor = "#fff";
-      jobnav.current.style.borderLeft = "none";
-      jobnav.current.style.backgroundColor = "white";
-      homenav.current.style.borderLeft = "none";
-      homenav.current.style.backgroundColor = "white";
-      companynav.current.style.borderLeft = "none";
-      companynav.current.style.backgroundColor = "white";
-      settingsnav.current.style.borderLeft = "none";
-      settingsnav.current.style.backgroundColor = "white";
-      event.preventDefault();
-      navigate("/meethome");
-    };
-    const quiznavclick = (event) => {
-      meetingnav.current.style.borderLeft = "4px solid #EF4444";
-      meetingnav.current.style.backgroundColor = "#fff";
-      jobnav.current.style.borderLeft = "none";
-      jobnav.current.style.backgroundColor = "white";
-      homenav.current.style.borderLeft = "none";
-      homenav.current.style.backgroundColor = "white";
-      companynav.current.style.borderLeft = "none";
-      companynav.current.style.backgroundColor = "white";
-      settingsnav.current.style.borderLeft = "none";
-      settingsnav.current.style.backgroundColor = "white";
-      event.preventDefault();
-      navigate("/assesmentest");
-    };
-    const companynavclick = (event) => {
-      companynav.current.style.borderLeft = "4px solid #EF4444";
-      companynav.current.style.backgroundColor = "#fff";
-      jobnav.current.style.borderLeft = "none";
-      jobnav.current.style.backgroundColor = "white";
-      meetingnav.current.style.borderLeft = "none";
-      meetingnav.current.style.backgroundColor = "white";
-      homenav.current.style.borderLeft = "none";
-      homenav.current.style.backgroundColor = "white";
-      settingsnav.current.style.borderLeft = "none";
-      settingsnav.current.style.backgroundColor = "white";
-      event.preventDefault();
-      navigate("/companies");
-    };
-    const settingsnavclick = (event) => {
-      settingsnav.current.style.borderLeft = "4px solid #EF4444";
-      settingsnav.current.style.backgroundColor = "#fff";
-      jobnav.current.style.borderLeft = "none";
-      jobnav.current.style.backgroundColor = "white";
-      meetingnav.current.style.borderLeft = "none";
-      meetingnav.current.style.backgroundColor = "white";
-      companynav.current.style.borderLeft = "none";
-      companynav.current.style.backgroundColor = "white";
-      homenav.current.style.borderLeft = "none";
-      homenav.current.style.backgroundColor = "white";
-      event.preventDefault();
-      navigate("/settings");
-    };
-    return (
-      <div>
-
-
-{isLoading ? (
+  const homenavclick = (event) => {
+    homenav.current.style.borderLeft = "4px solid #EF4444";
+    homenav.current.style.backgroundColor = "#fff";
+    jobnav.current.style.borderLeft = "none";
+    jobnav.current.style.backgroundColor = "white";
+    meetingnav.current.style.borderLeft = "none";
+    meetingnav.current.style.backgroundColor = "white";
+    companynav.current.style.borderLeft = "none";
+    companynav.current.style.backgroundColor = "white";
+    settingsnav.current.style.borderLeft = "none";
+    settingsnav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/");
+  };
+  const jobnavclick = (event) => {
+    jobnav.current.style.borderLeft = "4px solid #EF4444";
+    jobnav.current.style.backgroundColor = "#fff";
+    homenav.current.style.borderLeft = "none";
+    homenav.current.style.backgroundColor = "white";
+    meetingnav.current.style.borderLeft = "none";
+    meetingnav.current.style.backgroundColor = "white";
+    companynav.current.style.borderLeft = "none";
+    companynav.current.style.backgroundColor = "white";
+    settingsnav.current.style.borderLeft = "none";
+    settingsnav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/jobs");
+  };
+  const jobappnavclick = (event) => {
+    jobnav.current.style.borderLeft = "4px solid #EF4444";
+    jobnav.current.style.backgroundColor = "#fff";
+    homenav.current.style.borderLeft = "none";
+    homenav.current.style.backgroundColor = "white";
+    meetingnav.current.style.borderLeft = "none";
+    meetingnav.current.style.backgroundColor = "white";
+    companynav.current.style.borderLeft = "none";
+    companynav.current.style.backgroundColor = "white";
+    settingsnav.current.style.borderLeft = "none";
+    settingsnav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/jobapped");
+  };
+  const meetingnavclick = (event) => {
+    meetingnav.current.style.borderLeft = "4px solid #EF4444";
+    meetingnav.current.style.backgroundColor = "#fff";
+    jobnav.current.style.borderLeft = "none";
+    jobnav.current.style.backgroundColor = "white";
+    homenav.current.style.borderLeft = "none";
+    homenav.current.style.backgroundColor = "white";
+    companynav.current.style.borderLeft = "none";
+    companynav.current.style.backgroundColor = "white";
+    settingsnav.current.style.borderLeft = "none";
+    settingsnav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/meethome");
+  };
+  const quiznavclick = (event) => {
+    meetingnav.current.style.borderLeft = "4px solid #EF4444";
+    meetingnav.current.style.backgroundColor = "#fff";
+    jobnav.current.style.borderLeft = "none";
+    jobnav.current.style.backgroundColor = "white";
+    homenav.current.style.borderLeft = "none";
+    homenav.current.style.backgroundColor = "white";
+    companynav.current.style.borderLeft = "none";
+    companynav.current.style.backgroundColor = "white";
+    settingsnav.current.style.borderLeft = "none";
+    settingsnav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/assesmentest");
+  };
+  const companynavclick = (event) => {
+    companynav.current.style.borderLeft = "4px solid #EF4444";
+    companynav.current.style.backgroundColor = "#fff";
+    jobnav.current.style.borderLeft = "none";
+    jobnav.current.style.backgroundColor = "white";
+    meetingnav.current.style.borderLeft = "none";
+    meetingnav.current.style.backgroundColor = "white";
+    homenav.current.style.borderLeft = "none";
+    homenav.current.style.backgroundColor = "white";
+    settingsnav.current.style.borderLeft = "none";
+    settingsnav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/companies");
+  };
+  const settingsnavclick = (event) => {
+    settingsnav.current.style.borderLeft = "4px solid #EF4444";
+    settingsnav.current.style.backgroundColor = "#fff";
+    jobnav.current.style.borderLeft = "none";
+    jobnav.current.style.backgroundColor = "white";
+    meetingnav.current.style.borderLeft = "none";
+    meetingnav.current.style.backgroundColor = "white";
+    companynav.current.style.borderLeft = "none";
+    companynav.current.style.backgroundColor = "white";
+    homenav.current.style.borderLeft = "none";
+    homenav.current.style.backgroundColor = "white";
+    event.preventDefault();
+    navigate("/settings");
+  };
+  return (
+    <div>
+      {isLoading ? (
         <div
           className="w-full bg-indigo-100 flex"
           style={{
@@ -180,7 +185,6 @@ function Home() {
             justifyContent: "center",
           }}
         >
-         
           <div>
             <lord-icon
               src="https://cdn.lordicon.com/oezixobx.json"
@@ -203,7 +207,6 @@ function Home() {
               width: "20%",
               height: "97vh",
               backgroundColor: "white",
-          
             }}
           >
             <h2 className="font-bold text-navy-700 dark:text-white text-2xl fixed left-10 top-20">
@@ -227,7 +230,7 @@ function Home() {
                 Home
               </h1>
             </div>
-{/*job*/}
+            {/*job*/}
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={jobnavclick}
@@ -243,7 +246,7 @@ function Home() {
                 Jobs
               </h1>
             </div>
- {/*jobApplyed*/}
+            {/*jobApplyed*/}
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
               onClick={jobappnavclick}
@@ -259,7 +262,6 @@ function Home() {
                 JobApplyed
               </h1>
             </div>
-
 
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
@@ -286,7 +288,6 @@ function Home() {
                 Quiz
               </h1>
             </div>
-
 
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
@@ -316,7 +317,6 @@ function Home() {
             </div>
           </div>
 
-
           <div
             className="flex items-center justify-center flex-col gap-4"
             style={{
@@ -342,99 +342,126 @@ function Home() {
                 />
               </div>
 
-    {/* start Notification */}
-    <Dropdown
-    button={
-      <p className="cursor-pointer">
-              <lord-icon
-                src="https://cdn.lordicon.com/msetysan.json"
-                trigger="hover"
-                style={{ width: "25px", height: "25px" }}
-              />
-            </p>
-          }
+              {/* start Notification */}
+              <Dropdown
+                button={
+                  <p className="cursor-pointer">
+                    <lord-icon
+                      src="https://cdn.lordicon.com/msetysan.json"
+                      trigger="hover"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                  </p>
+                }
                 animation="origin-[65%_0%] md:origin-top-right transition-all duration-300 ease-in-out"
-          children={
-            <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-white p-4 shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:text-white dark:shadow-none sm:w-[460px]">
-              <div className="flex items-center justify-between">
-                <p className="text-base font-bold text-navy-700 dark:text-white">
-                  Notification
-                </p>
-                <p className="text-sm font-bold text-navy-700 dark:text-white">
-                  Mark all read
-                </p>
-              </div>
-              <button className="flex w-full items-center">
-                <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
-                <p className="cursor-pointer">
-              <lord-icon
-                className="cursor-pointer"
-                onClick={profileclick}
-                src="https://cdn.lordicon.com/hbvyhtse.json"
-                trigger="hover"
-                style={{ width: "25px", height: "25px" }}
+                children={
+                  <div className="flex w-[360px] flex-col gap-3 rounded-[20px] bg-white p-4 shadow-xl shadow-shadow-500 dark:!bg-navy-700 dark:text-white dark:shadow-none sm:w-[460px]">
+                    <div className="flex items-center justify-between">
+                      <p className="text-base font-bold text-navy-700 dark:text-white">
+                        Notification
+                      </p>
+                      <p className="text-sm font-bold text-navy-700 dark:text-white">
+                        Mark all read
+                      </p>
+                    </div>
+                    <button className="flex w-full items-center">
+                      <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
+                        <p className="cursor-pointer">
+                          <lord-icon
+                            className="cursor-pointer"
+                            onClick={profileclick}
+                            src="https://cdn.lordicon.com/hbvyhtse.json"
+                            trigger="hover"
+                            style={{ width: "25px", height: "25px" }}
+                          />
+                        </p>
+                      </div>
+                      <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                        <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
+                          Apple
+                        </p>
+                        <p className="font-base text-left text-xs text-gray-900 dark:text-white">
+                          Your front-end Developer apply has been Approved
+                          Interview date will be 12-03-2020
+                        </p>
+                      </div>
+                    </button>
+
+                    <button className="flex w-full items-center">
+                      <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
+                        <p className="cursor-pointer">
+                          <lord-icon
+                            className="cursor-pointer"
+                            src="https://cdn.lordicon.com/hbvyhtse.json"
+                            trigger="hover"
+                            style={{ width: "25px", height: "25px" }}
+                          />
+                        </p>
+                      </div>
+                      <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                        <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
+                          Jobee
+                        </p>
+                        <p className="font-base text-left text-xs text-gray-900 dark:text-white">
+                          Your Application for Designer has been Approved
+                          Interview date will be 08-11-2020
+                        </p>
+                      </div>
+                    </button>
+                  </div>
+                }
               />
-                 </p>
-                </div>
-                <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
-                  <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
-                    Apple
-                  </p>
-                  <p className="font-base text-left text-xs text-gray-900 dark:text-white">
-                    Your front-end Developer apply has been Approved
-                    Interview date will be 12-03-2020
-                  </p>
-                </div>
-              </button>
+              <p className="cursor-pointer">
+                <lord-icon
+                  className="cursor-pointer"
+                  onClick={profileclick}
+                  src="https://cdn.lordicon.com/hbvyhtse.json"
+                  trigger="hover"
+                  style={{ width: "25px", height: "25px" }}
+                />
+              </p>
+            </div>
 
-              <button className="flex w-full items-center">
-                <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
-                <p className="cursor-pointer">
-              <lord-icon
-                className="cursor-pointer"
-              
-                src="https://cdn.lordicon.com/hbvyhtse.json"
-                trigger="hover"
-                style={{ width: "25px", height: "25px" }}
-              />
-                 </p>
-                </div>
-                <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
-                  <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
-                    Jobee
-                  </p>
-                  <p className="font-base text-left text-xs text-gray-900 dark:text-white">
-                     Your Application for Designer has been Approved
-                     Interview date will be 08-11-2020
-                  </p>
-                </div>
-              </button>
-        </div>
-      }
-      />
-      <p className="cursor-pointer">
-              <lord-icon
-                className="cursor-pointer"
-                onClick={profileclick}
-               
-                src="https://cdn.lordicon.com/hbvyhtse.json"
-                trigger="hover"
-                style={{ width: "25px", height: "25px" }}
-              />
-                 </p>
-      </div>
-          
-
-
-
-
-            
-
-{/* latest job card */}
+            {/* latest job card */}
             <div
               className=" rounded-[20px] flex items-center justify-center"
-              style={{ backgroundColor: "white",width:"56rem",height:"20rem",marginRight:"5rem" }}
+              style={{
+                backgroundColor: "white",
+                width: "56rem",
+                height: "20rem",
+                marginRight: "5rem",
+              }}
             >
+              {job.map((data) => (
+                <div className="w-3/5 h-full rounded-lg flex items-center justify-center flex-col">
+                  <div className="w-auto h-auto ">
+                    <h1 className="text-2xl font-bold text-black md:text-3xl md:leading-[42 mt-70 pt-12">
+                      {data.name}
+                    </h1>
+                    <h2 className="pt-6 text-base font-medium text-gray-600">
+                      {data.desc}
+                    </h2>
+                  </div>
+                  <div className="w-4/5 h-1/2"></div>
+                  <div
+                    className="h-auto flex gap-4 items-center justify-center"
+                    style={{ width: "90%" }}
+                  >
+                    <button
+                      className="text-white linear rounded-xl bg-blue-700  px-8 py-2 text-center text-base font-semibold transition duration-200 hover:!bg-black/80 active:!bg-black/70 mb-20"
+                      onClick={handleButtonClick}
+                    >
+                      APPLY
+                    </button>
+                    <button
+                      className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105 mb-20"
+                      onClick={jobappnavclick}
+                    >
+                      LEARN MORE
+                    </button>
+                  </div>
+                </div>
+              ))}
               <div className="w-3/5 h-full rounded-lg flex items-center justify-center flex-col">
                 <div className="w-auto h-auto ">
                   <h1 className="text-2xl font-bold text-black md:text-3xl md:leading-[42 mt-70 pt-12">
@@ -455,25 +482,23 @@ function Home() {
                   >
                     APPLY
                   </button>
-                  <button className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105 mb-20"
-                  onClick={jobappnavclick}>
+                  <button
+                    className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105 mb-20"
+                    onClick={jobappnavclick}
+                  >
                     LEARN MORE
                   </button>
                 </div>
               </div>
-
 
               <div className="w-2/5 h-full rounded-lg p-1">
                 <img src={fsd} alt="pic" className="h-full rounded-lg" />
               </div>
             </div>
 
-
-
             <div
               className="rounded-lg flex items-left justify-center flex-col gap-1 "
               style={{
-        
                 width: "100%",
                 height: "52%",
                 backgroundColor: "#f4f7fe",
@@ -631,8 +656,7 @@ function Home() {
                       trigger="hover"
                       style={{ width: "25px", height: "25px" }}
                     ></lord-icon>
-                     
-           
+
                     <button
                       className="p-1 bg-blue-700 text-base font-sans font-semibold tracking-wide text-white rounded-lg hover:scale-105"
                       style={{ width: "45%" }}
@@ -645,7 +669,6 @@ function Home() {
             </div>
           </div>
 
-        
           <div
             className="bg-white flex items-center justify-center rounded-tr-lg rounded-br-lg"
             style={{
@@ -654,7 +677,6 @@ function Home() {
               width: "25%",
               height: "97vh",
               backgroundColor: "white",
-          
             }}
           >
             {IsNotified ? (
@@ -711,8 +733,6 @@ function Home() {
                   </button>
                 </div>
               </div>
-
-
             ) : (
               <div
                 className="shadow-md flex items-center flex-col gap-2 rounded-lg"
@@ -730,7 +750,7 @@ function Home() {
                     Notifications
                   </h1>
                 </div>
-            
+
                 <div
                   className="w-full rounded-bl-lg rounded-br -lg flex items-center justify-center gap-2"
                   style={{ height: "10%" }}
@@ -747,16 +767,9 @@ function Home() {
             )}
           </div>
         </div>
-  
-
-      
-    )}
+      )}
     </div>
-  )
-};
-  
- 
-
+  );
+}
 
 export default Home;
-
