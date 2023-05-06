@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const UserCollection = require("../models/userModel");
 
-
 const userController = {};
 
 // Authenticate a user
@@ -41,13 +40,16 @@ userController.login = async (req, res, next) => {
 
 // Register a new user
 userController.register = async (req, res) => {
+  console.log({ body: req.body });
   try {
     const { firstName, lastName, email, password, resume } = req.body;
 
     // Check if the email is already in use
     const existingUser = await UserCollection.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email is already in use" });
+      return res
+        .status(400)
+        .json({ status: false, message: "Email is already in use" });
     }
 
     // Hash the password
@@ -66,10 +68,12 @@ userController.register = async (req, res) => {
     // Save the user to the database
     await newUser.save();
 
-    res.status(201).json({ message: "User created successfully" });
+    res
+      .status(201)
+      .json({ status: true, message: "User created successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ status: false, message: "Server error" });
   }
 };
 
@@ -82,11 +86,12 @@ userController.getUser = async (req, res) => {
     // const user = await UserCollection.findById(userId).select(
     //   "firstName lastName  resume "
     // );
-    const user = await UserCollection.findById(userId).select("firstName lastName email resume ");
+    const user = await UserCollection.findById(userId).select(
+      "firstName lastName email resume "
+    );
     if (!user) {
       return res.status(404).json({ message: "UserCollection not found" });
     }
-   
 
     res.status(200).json(user);
   } catch (err) {

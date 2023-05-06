@@ -5,9 +5,10 @@ require("dotenv").config();
 const cors = require("cors");
 
 // Import controllers
+const uploader = require("../controllers/imageController");
 const hrControllers = require("../controllers/hrController");
 const userController = require("../controllers/userController");
-
+const jobController = require("../controllers/jobController");
 const app = express();
 // Allow requests from any origin
 app.use(cors());
@@ -33,6 +34,10 @@ app.use((err, req, res, next) => {
 // Routes
 app.post("/hr/register", hrControllers.registerHR);
 app.post("/hr/login", hrControllers.loginHR);
+app.post("/job/register", jobController.createJob);
+app.post("/job/get", jobController.getAll);
+app.post("/job/sort", jobController.getById);
+
 //app.get("/hr/:hrId/profile", hrControllers.getHRProfile);
 //app.put("/hr/:hrId/approve", hrControllers.approveHRAccount);
 app.post("/users/register", userController.register);

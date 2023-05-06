@@ -60,7 +60,7 @@ hrcontroller.registerHR = async (req, res, next) => {
 
     emailService.sendRegistrationNotification(newHR);
     res.status(201).json({
-      status: "success",
+      status: true,
       message: "HR user registered successfully",
       data: newHR,
     });
@@ -76,7 +76,7 @@ exports.getHRProfile = async (req, res, next) => {
     const hrUser = await HR.findById(req.params.hrId);
     if (!hrUser) {
       res.status(404).json({
-        status: "fail",
+        status: false,
         message: "HR user not found",
       });
       return;

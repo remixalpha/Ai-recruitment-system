@@ -2,27 +2,73 @@ import React, { useState } from "react";
 import { Tab } from "@headlessui/react";
 import axios from "axios";
 import "../../css/Registration/registration.css";
-import { useNavigate } from "react-router-dom";
+import { resolvePath, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Header from "../../partials/Header";
 import PageIllustration from "../../partials/PageIllustration";
 
 function Registration() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [resume, setResume] = useState("");
   const [IsTabed, setIsTabed] = useState(true);
+  const [companyName, setCompanyName] = useState("");
+  const [hrName, setHrName] = useState("");
+  const [formValues, setFormValues] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    resume: "is my resume",
+  });
+  const [hrFormValues, setHrFormValues] = useState({
+    companyName: "",
+    hrName: "",
+    email: "",
+    password: "",
+    resume: "is my resume",
+  });
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
+  const hrHandleChange = (e) => {
+    setHrFormValues({ ...hrFormValues, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (IsTabed) {
+      const response = await axios.post(`${URL}users/register`, formValues);
+      if (response.data.status === true) {
+        alert(response.data.message);
+        navigate("/loginpage");
+        window.location.reload();
+      } else {
+        alert(response.data?.message);
+      }
+      console.log(response.data);
+    } else {
+      const response = await axios.post(`${URL}hr/register`, hrFormValues);
+      if (response.data.status === true) {
+        alert(response.data?.message);
+        navigate("/loginpage");
+        window.location.reload();
+      } else {
+        alert(response.data?.message);
+      }
+      console.log(response.data);
+    }
+  };
 
+  const navigate = useNavigate();
 
-
+  const URL = "http://localhost:5000/";
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     setResume(file);
@@ -33,8 +79,6 @@ function Registration() {
   const IsTabedTrue = () => {
     setIsTabed(true);
   };
- 
-
 
   return (
     <div className="main">
@@ -84,9 +128,12 @@ function Registration() {
                 <Tab.Panels>
                   <Tab.Panel className="space-y-6">
                     {/* userRegister */}
-                
-                    <form>
-                      <div className="mb-2">
+
+                    <form onSubmit={handleSubmit}>
+                      <div
+                        className="mb-2"
+                        //  onSubmit={handleSubmit}
+                      >
                         <label
                           htmlFor="first-name"
                           className="block text-sm font-medium text-gray-700"
@@ -96,10 +143,11 @@ function Registration() {
                         <div className="mt-1">
                           <input
                             id="first-name"
-                            name="first-name"
+                            name="firstName"
                             type="text"
                             autoComplete="given-name"
-                            value={firstName}
+                            value={formValues.firstName}
+                            onChange={handleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -115,10 +163,11 @@ function Registration() {
                         <div className="mt-1">
                           <input
                             id="last-name"
-                            name="last-name"
+                            name="lastName"
                             type="text"
                             autoComplete="family-name"
-                            value={lastName}
+                            value={formValues.lastName}
+                            onChange={handleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -137,7 +186,8 @@ function Registration() {
                             name="email"
                             type="email"
                             autoComplete="email"
-                            value={email}
+                            value={formValues.email}
+                            onChange={handleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -153,25 +203,34 @@ function Registration() {
                         <div className="mt-1 relative rounded-md shadow-sm">
                           <input
                             id="password"
-                            name="password"
                             type={showPassword ? "text" : "password"}
                             autoComplete="current-password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            name="password"
+                            value={formValues.password}
+                            onChange={handleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
-                         
-                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                    {showPassword ? (
-                                        <span class="material-symbols-outlined" onClick={togglePasswordVisibility}>visibility_off</span>
-                                    ) : (
-                                        <span class="material-symbols-outlined" onClick={togglePasswordVisibility}>visibility</span>
-                                    )}
-                                </div>
-                            </div>
+
+                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            {showPassword ? (
+                              <span
+                                className="material-symbols-outlined"
+                                onClick={togglePasswordVisibility}
+                              >
+                                visibility_off
+                              </span>
+                            ) : (
+                              <span
+                                className="material-symbols-outlined"
+                                onClick={togglePasswordVisibility}
+                              >
+                                visibility
+                              </span>
+                            )}
+                          </div>
                         </div>
-                  
+                      </div>
 
                       <div className="mb-2">
                         <label
@@ -182,7 +241,7 @@ function Registration() {
                         </label>
                         <div className="mt-1">
                           <div className="relative rounded-md shadow-sm flex items-center justify-between bg-violet-500 p-1">
-                            <span class="material-symbols-outlined text-white">
+                            <span className="material-symbols-outlined text-white">
                               description
                             </span>
                             <input
@@ -207,13 +266,14 @@ function Registration() {
                       </div>
                       <div className="mb-2">
                         <button
-                          type="submit"
+                          // type="submit"
+                          onClick={() => handleSubmit()}
                           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                           Sign up
                         </button>
                       </div>
-                  
+
                       <div className="w-full h-fit p-2 flex items-center justify-center gap-2">
                         <span className="text-gray-600 font-sans">
                           Already Have An Account ?
@@ -233,7 +293,7 @@ function Registration() {
               ) : (
                 <Tab.Panels>
                   <Tab.Panel className="space-y-6">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                       <div className="mb-2">
                         <label
                           htmlFor="first-name"
@@ -244,11 +304,11 @@ function Registration() {
                         <div className="mt-1">
                           <input
                             id="first-name"
-                            name="first-name"
+                            name="companyName"
                             type="text"
                             autoComplete="given-name"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
+                            value={hrFormValues.companyName}
+                            onChange={hrHandleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -264,11 +324,11 @@ function Registration() {
                         <div className="mt-1">
                           <input
                             id="last-name"
-                            name="last-name"
+                            name="hrName"
                             type="text"
                             autoComplete="family-name"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
+                            value={hrFormValues.hrName}
+                            onChange={hrHandleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -286,9 +346,9 @@ function Registration() {
                             id="email"
                             name="email"
                             type="email"
-                            autoComplete="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            // autoComplete="email"
+                            value={hrFormValues.email}
+                            onChange={hrHandleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -306,23 +366,23 @@ function Registration() {
                             id="password"
                             name="password"
                             type={showPassword ? "text" : "password"}
-                            autoComplete="current-password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            // autoComplete="current-password"
+                            value={hrFormValues.password}
+                            onChange={hrHandleChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
                           <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                             {showPassword ? (
                               <span
-                                class="material-symbols-outlined"
+                                className="material-symbols-outlined"
                                 onClick={togglePasswordVisibility}
                               >
                                 visibility
                               </span>
                             ) : (
                               <span
-                                class="material-symbols-outlined"
+                                className="material-symbols-outlined"
                                 onClick={togglePasswordVisibility}
                               >
                                 visibility_off
@@ -340,7 +400,7 @@ function Registration() {
                         </label>
                         <div className="mt-1">
                           <div className="relative rounded-md shadow-sm flex items-center justify-between bg-violet-500 p-1">
-                            <span class="material-symbols-outlined text-white">
+                            <span className="material-symbols-outlined text-white">
                               description
                             </span>
                             <input
