@@ -16,14 +16,8 @@ function Registration() {
   const [resume, setResume] = useState("");
   const [IsTabed, setIsTabed] = useState(true);
 
-  // State for managing HR registration form data and errors
-  const [candidate_errors, setCandidateErrors] = useState({});
-  const [candidate_sucess, setCandidateSuccess] = useState({});
 
-  // State for managing password visibility
-  const [showPassword_candidate, setShowPassword_candidate] = useState(false);
 
-  const URL = "http://localhost:5000/";
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -39,85 +33,8 @@ function Registration() {
   const IsTabedTrue = () => {
     setIsTabed(true);
   };
-  const navigate = useNavigate();
+ 
 
-  //Candidate register
-  const handleSubmitcandidate = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("resume", resume);
-
-    const candidate_errors = {};
-
-    if (!firstName) {
-      candidate_errors.firstName = "First Name is required";
-    }
-
-    if (!lastName) {
-      candidate_errors.lastName = "Last Name is required";
-    }
-
-    if (!email) {
-      candidate_errors.registerEmail = "Email is required";
-    }
-
-    if (!password) {
-      candidate_errors.registerPassword = "Password is required";
-    }
-
-    if (Object.keys(candidate_errors).length > 0) {
-      setCandidateErrors(candidate_errors);
-      return;
-    }
-
-    try {
-      const response = await axios.post(`${URL}users/register`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setCandidateSuccess("Registration Successful!");
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-      setResume(null);
-    } catch (error) {
-      console.log(error);
-      setCandidateErrors("Registration failed. Please try again later.");
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    switch (name) {
-      case "firstName":
-        setFirstName(value);
-        break;
-      case "lastName":
-        setLastName(value);
-        break;
-      case "email":
-        setEmail(value);
-        break;
-      case "password":
-        setPassword(value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleClickShowPasswordcandidate = () => {
-    setShowPassword_candidate(!showPassword_candidate);
-  };
 
   return (
     <div className="main">
@@ -167,8 +84,8 @@ function Registration() {
                 <Tab.Panels>
                   <Tab.Panel className="space-y-6">
                     {/* userRegister */}
-                    {candidate_errors && <p>{candidate_errors}</p>}
-                    <form onSubmit={handleSubmitcandidate}>
+                
+                    <form>
                       <div className="mb-2">
                         <label
                           htmlFor="first-name"
@@ -183,7 +100,6 @@ function Registration() {
                             type="text"
                             autoComplete="given-name"
                             value={firstName}
-                            onChange={handleInputChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -203,7 +119,6 @@ function Registration() {
                             type="text"
                             autoComplete="family-name"
                             value={lastName}
-                            onChange={handleInputChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -223,7 +138,6 @@ function Registration() {
                             type="email"
                             autoComplete="email"
                             value={email}
-                            onChange={handleInputChange}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -240,47 +154,24 @@ function Registration() {
                           <input
                             id="password"
                             name="password"
-                            type={showPassword_candidate ? "text" : "password"}
+                            type={showPassword ? "text" : "password"}
                             autoComplete="current-password"
                             value={password}
-                            onChange={handleInputChange}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
-                          <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            {showPassword_candidate ? (
-                              <div
-                                class="material-symbols-outlined"
-                                onClick={() => {
-                                  togglePasswordVisibility();
-                                  setShowPassword_candidate(
-                                    !showPassword_candidate
-                                  );
-                                }}
-                              >
-                                visibility_off
-                              </div>
-                            ) : (
-                              <div
-                                class="material-symbols-outlined"
-                                onClick={() => {
-                                  togglePasswordVisibility();
-                                  setShowPassword_candidate(
-                                    !showPassword_candidate
-                                  );
-                                }}
-                              >
-                                visibility
-                              </div>
-                            )}
-                          </div>
+                         
+                                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                    {showPassword ? (
+                                        <span class="material-symbols-outlined" onClick={togglePasswordVisibility}>visibility_off</span>
+                                    ) : (
+                                        <span class="material-symbols-outlined" onClick={togglePasswordVisibility}>visibility</span>
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                        {candidate_errors.registerPassword && (
-                          <div className="error">
-                            {candidate_errors.registerPassword}
-                          </div>
-                        )}
-                      </div>
+                  
 
                       <div className="mb-2">
                         <label
@@ -322,11 +213,7 @@ function Registration() {
                           Sign up
                         </button>
                       </div>
-                      {candidate_sucess && (
-                        <p className="mt-3 text-sm text-green-500">
-                          {candidate_sucess}
-                        </p>
-                      )}
+                  
                       <div className="w-full h-fit p-2 flex items-center justify-center gap-2">
                         <span className="text-gray-600 font-sans">
                           Already Have An Account ?

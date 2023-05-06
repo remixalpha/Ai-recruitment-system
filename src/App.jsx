@@ -66,7 +66,6 @@ function App() {
           <Route path="/jobpost" element={<JobPosting />} />
           <Route path="/meethome" element={<Meethome />} />
           <Route path="/room/:roomID" element={<Room />} />
-
         </Routes>
       </BrowserRouter>
     );
