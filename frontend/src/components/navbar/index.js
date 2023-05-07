@@ -16,38 +16,60 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 const Navbar = (props: {
-  onOpenSidenav: () => void;
-  brandText: string;
-  secondary?: boolean | string;
+  onOpenSidenav: () => void,
+  brandText: string,
+  secondary?: boolean | string,
 }) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
-
-
+  const [notify, setNotify] = useState([]);
   const navigate = useNavigate();
+  const URL = "http://localhost:5000/";
+  const HrId = localStorage.getItem("hr");
 
   //signout
-const signoutclick = (event) => {
-  localStorage.removeItem("hr");
-  localStorage.removeItem("hr-auth-key");
+  const signoutclick = (event) => {
+    localStorage.removeItem("hr");
+    localStorage.removeItem("hr-auth-key");
 
-  event.preventDefault();
-  navigate("/");
-  window.location.reload();
-};
+    event.preventDefault();
+    navigate("/");
+    window.location.reload();
+  };
 
   const profileclick = (event) => {
     event.preventDefault();
     navigate("/hrPro");
   };
+  const fetchJobRequest = async () => {
+    await axios
+      .post(`${URL}job/get`, {
+        to: HrId,
+      })
+      .then((res) => {
+        console.log({ res: res });
+        setNotify(res.data.doNotTrack);
+      });
+  };
+  const approveHandler = async (data) => {
+    await axios
+      .post(`${URL}job/approve`, {
+        applicationId: data._id,
+      })
+      .then((res) => {
+        console.log({ res: res });
+        alert("approved");
+      });
+  };
+  useEffect(() => {
+    fetchJobRequest();
+  }, []);
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
-     
           <Link
             className="text-sm font-normal capitalize text-navy-700 hover:underline dark:text-white dark:hover:text-white"
             to="#"
@@ -114,8 +136,27 @@ const signoutclick = (event) => {
                   </p>
                 </div>
               </button>
-
-              <button className="flex w-full items-center">
+              {notify &&
+                notify.map((data) => (
+                  <button className="flex w-full items-center">
+                    <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
+                      <BsArrowBarUp />
+                    </div>
+                    <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                      <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
+                        New Update: {data.from.firstName} {data.from.lastName}{" "}
+                        is apply for {data.jobId.jobName}
+                      </p>
+                      <p className="font-base text-left text-xs text-gray-900 dark:text-white">
+                        A new update for your downloaded item is available!
+                      </p>
+                      <button onClick={() => approveHandler(data)}>
+                        approve
+                      </button>
+                    </div>
+                  </button>
+                ))}
+              {/* <button className="flex w-full items-center">
                 <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
                   <BsArrowBarUp />
                 </div>
@@ -127,17 +168,16 @@ const signoutclick = (event) => {
                     A new update for your downloaded item is available!
                   </p>
                 </div>
-              </button>
+              </button> */}
             </div>
           }
           classNames={"py-2 top-4 -left-[230px] md:-left-[440px] w-max"}
         />
         {/* start Horizon PRO */}
         <Dropdown
-        
           button={
             <p className="cursor-pointer">
-              <IoMdInformationCircleOutline  className="h-4 w-4 text-gray-600 dark:text-white" />
+              <IoMdInformationCircleOutline className="h-4 w-4 text-gray-600 dark:text-white" />
             </p>
           }
           children={

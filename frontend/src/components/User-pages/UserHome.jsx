@@ -12,7 +12,7 @@ function Home() {
   const [IsNotified, setIsNotified] = useState(true);
   const [UserName, setUserName] = useState("");
   const [job, setJob] = useState([]);
-
+  const [selectedJob, setSelectedJob] = useState(null);
   const navigate = useNavigate();
   const homenav = useRef(null);
   const jobnav = useRef(null);
@@ -23,6 +23,7 @@ function Home() {
   const settingsnav = useRef(null);
   const MyUserId = localStorage.getItem("user");
   const URL = "http://localhost:5000/";
+  const [notify, setNotify] = useState([]);
 
   const fetchUser = async () => {
     await axios
@@ -43,10 +44,35 @@ function Home() {
       setJob(res.data?.doc);
     });
   };
+  const jobApplyHandler = async (data) => {
+    console.log({ selected: data });
+    await axios
+      .post(`${URL}job/apply`, {
+        from: MyUserId,
+        to: data.CreatedHr,
+        jobId: data._id,
+      })
+      .then((res) => {
+        console.log({ res: res });
+        alert("hey");
+      });
+  };
+  const fetchJobRequest = async () => {
+    await axios
+      .post(`${URL}job/get`, {
+        from: MyUserId,
+        approved: true,
+      })
+      .then((res) => {
+        console.log({ res: res });
+        setNotify(res.data.doNotTrack);
+      });
+  };
   useEffect(() => {
     fetchUser();
 
     fetchJob();
+    fetchJobRequest();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -311,7 +337,7 @@ function Home() {
                 trigger="hover"
                 style={{ width: "22px", height: "22px" }}
               ></lord-icon>
-              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
+              <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer ">
                 Settings
               </h1>
             </div>
@@ -364,28 +390,31 @@ function Home() {
                         Mark all read
                       </p>
                     </div>
-                    <button className="flex w-full items-center">
-                      <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
-                        <p className="cursor-pointer">
-                          <lord-icon
-                            className="cursor-pointer"
-                            onClick={profileclick}
-                            src="https://cdn.lordicon.com/hbvyhtse.json"
-                            trigger="hover"
-                            style={{ width: "25px", height: "25px" }}
-                          />
-                        </p>
-                      </div>
-                      <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
-                        <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
-                          Apple
-                        </p>
-                        <p className="font-base text-left text-xs text-gray-900 dark:text-white">
-                          Your front-end Developer apply has been Approved
-                          Interview date will be 12-03-2020
-                        </p>
-                      </div>
-                    </button>
+                    {notify &&
+                      notify.map((data) => (
+                        <button className="flex w-full items-center">
+                          <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
+                            <p className="cursor-pointer">
+                              <lord-icon
+                                className="cursor-pointer"
+                                onClick={profileclick}
+                                src="https://cdn.lordicon.com/hbvyhtse.json"
+                                trigger="hover"
+                                style={{ width: "25px", height: "25px" }}
+                              />
+                            </p>
+                          </div>
+                          <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
+                            <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-gray-900">
+                              Congratz {data.jobId.jobName} is Approved
+                            </p>
+                            <p className="font-base text-left text-xs text-gray-900 dark:text-gray-900">
+                              Your {data.jobId.jobName} apply has been Approved
+                              by Hr Interview date will be sent soon
+                            </p>
+                          </div>
+                        </button>
+                      ))}
 
                     <button className="flex w-full items-center">
                       <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
@@ -490,7 +519,7 @@ function Home() {
                 </h1>
               </div>
               <div
-                className="rounded-[20px] flex items-center justify-center flex-row gap-2"
+                className="rounded-[20px] flex items-center justify-center flex-row flex-wrap gap-2"
                 style={{ width: "95%", height: "90%" }}
               >
                 {/* <div
@@ -592,11 +621,20 @@ function Home() {
                     className="bg-white rounded-[15px] p-1"
                     style={{ width: "31.666%", height: "97%" }}
                   >
-                    <img
-                      src={fsdc}
-                      alt="pic"
-                      className="h-2/5 pl-6 w-90 rounded-tl-lg "
-                    />
+                    {data.categories.includes("Software") ? (
+                      <img
+                        src={fsdc}
+                        alt="pic"
+                        className="h-2/5 pl-6 w-90 rounded-tl-lg "
+                      />
+                    ) : (
+                      <img
+                        src={fsd}
+                        alt="pic"
+                        className="h-2/5 pl-6 w-90 rounded-tl-lg "
+                      />
+                    )}
+
                     <div className="w-full h-2/5 flex flex-col gap-4 p-1 bg-white">
                       <h1 className="text-xl font-sans font-bold text-left ml-5 text-gray-900 uppercase">
                         {data.jobName}
@@ -628,6 +666,9 @@ function Home() {
                       ></lord-icon>
 
                       <button
+                        onClick={() => {
+                          jobApplyHandler(data);
+                        }}
                         className="p-1 bg-blue-700 text-base font-sans font-semibold tracking-wide text-white rounded-lg hover:scale-105"
                         style={{ width: "45%" }}
                       >
