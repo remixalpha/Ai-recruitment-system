@@ -15,7 +15,7 @@ go to Backend
 
 ```bash
   cd backend
-  rm -rf nodemodules
+  rm -rf node_modules
   npm i
   npm start
 ```
@@ -24,7 +24,7 @@ go to Frontend open new terminal
 
 ```bash
   cd frontend
-  rm -rf nodemodules
+  rm -rf node_modules
   npm i
   npm start
 ```
