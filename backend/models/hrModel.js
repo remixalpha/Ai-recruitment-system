@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const hrSchema = new mongoose.Schema({
+const hrSchema = mongoose.Schema({
   companyName: {
     type: String,
     required: true,
@@ -29,6 +29,4 @@ const hrSchema = new mongoose.Schema({
   },
 });
 
-const HR = mongoose.model("HR", hrSchema);
-
-module.exports = HR;
+export default mongoose.model("Hr", hrSchema);

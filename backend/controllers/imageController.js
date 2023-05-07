@@ -37,4 +37,4 @@ const upload = multer({
 
 // let upload = multer({ storage: storage, fileFilter: fileFilter });
 
-module.exports = upload.single("Image");
+export default upload.single("Image");

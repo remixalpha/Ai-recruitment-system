@@ -1,31 +1,49 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const userRoutes = require('./routes/userRoutes');
-const hrRoutes = require('./routes/hrRoutes');
-
-const app = express();
-
-// Enable CORS for all routes
-app.use(cors());
-
-// Parse JSON request bodies
-app.use(express.json());
+import createError from "http-errors";
+import express from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import Mongoose from "mongoose";
+const log = require("simple-node-logger").createSimpleLogger();
+import index from "./routes/index";
+const cors = require("cors");
+const https = require("https");
+const fs = require("fs");
 
 // Connect to the database
-mongoose.connect('mongodb://127.0.0.1:27017/Ai', { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', function() {
-  console.log('MongoDB Connected');
+Mongoose.connect("mongodb://127.0.0.1:27017/Ai", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const db = Mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", function () {
+  console.log("MongoDB Connected");
 });
 
-// Mount routes
-app.use('/api/users', userRoutes);
-app.use('/api/hr', hrRoutes);
+var app = express();
+app.use(logger("dev"));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+// image upload
+app.use(express.static("./public"));
+app.use("/uploads", express.static("uploads"));
 
-// Start the server
-const PORT =  5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.use(express.static(path.join(__dirname, "public")));
+// app.use(saveRequests);
+app.use("", index);
+app.use(function (req, res, next) {
+  next(createError(404));
+});
+app.use(function (err, req, res, next) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.status(err.status || 500);
+  res.json({ message: err });
+});
+
+app.listen(5000, () => {
+  log.info(`APP IS RUNNING 5000`);
 });

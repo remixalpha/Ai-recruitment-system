@@ -1,20 +1,44 @@
-const emailService = require("../services/emailService");
-const jwt = require("jsonwebtoken");
+import HrModel from "../models/hrModel";
 const bcrypt = require("bcryptjs");
-const HR = require("../models/hrModel");
+
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
+export const createHr = async (req, res, next) => {
+  try {
+    const { companyName, hrName, email, password, companyType } = req.body;
+    // validate input data
+    // ...
+    // save HR data to database
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const newHR = await HrModel.create({
+      companyName,
+      hrName,
+      email,
+      password: hashedPassword,
+      companyType,
+    });
+    // send email notification to developer
 
-const hrcontroller = {};
-// Authenticate a HR
-hrcontroller.loginHR = async (req, res, next) => {
-  console.log(req.body);
+    // emailService.sendRegistrationNotification(newHR);
+    res.status(201).json({
+      status: true,
+      message: "HR user registered successfully",
+      data: newHR,
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, msg: "catch err", error: error });
+  }
+};
 
+export const hrLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
     // Check if the user exists
-    const hrUser = await HR.findOne({ email });
+    const hrUser = await HrModel.findOne({ email });
     if (!hrUser) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
@@ -34,126 +58,22 @@ hrcontroller.loginHR = async (req, res, next) => {
       token,
       doc: hrUser._id,
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+  } catch (error) {
+    res.status(500).json({ status: false, msg: "catch err" });
   }
 };
-
-// handle HTTP POST request for HR registration
-hrcontroller.registerHR = async (req, res, next) => {
+export const getHr = async (req, res, next) => {
   try {
-    const { companyName, hrName, email, password, companyType } = req.body;
-    // validate input data
-    // ...
-    // save HR data to database
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    const newHR = await HR.create({
-      companyName,
-      hrName,
-      email,
-      password: hashedPassword,
-      companyType,
-    });
-    // send email notification to developer
-
-    emailService.sendRegistrationNotification(newHR);
-    res.status(201).json({
-      status: true,
-      message: "HR user registered successfully",
-      data: newHR,
-    });
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-};
-
-// handle HTTP GET request for HR profile
-exports.getHRProfile = async (req, res, next) => {
-  try {
-    const hrUser = await HR.findById(req.params.hrId);
-    if (!hrUser) {
-      res.status(404).json({
-        status: false,
-        message: "HR user not found",
-      });
-      return;
+    const { userId } = req.body;
+    const user = await HrModel.findById(userId).select(
+      "firstName lastName email resume "
+    );
+    if (!user) {
+      return res.status(404).json({ message: "hr not found" });
     }
-    res.status(200).json({
-      status: "success",
-      message: "HR user profile retrieved successfully",
-      data: hrUser,
-    });
-  } catch (err) {
-    console.error(err);
-    next(err);
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ status: false, msg: "catch err" });
   }
 };
-
-// handle HTTP PUT request for approving HR account by developer
-exports.approveHRAccount = async (req, res, next) => {
-  try {
-    const hrUser = await HR.findById(req.params.hrId);
-    if (!hrUser) {
-      res.status(404).json({
-        status: "fail",
-        message: "HR user not found",
-      });
-      return;
-    }
-    // update HR account with developer approval
-    // ...
-    res.status(200).json({
-      status: "success",
-      message: "HR account approved successfully",
-      data: hrUser,
-    });
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-};
-
-// handle HTTP GET request for retrieving all HR users
-exports.getAllHR = async (req, res, next) => {
-  try {
-    const allHR = await HR.find();
-    res.status(200).json({
-      status: "success",
-      message: "All HR users retrieved successfully",
-      data: allHR,
-    });
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-};
-
-// handle HTTP PUT request for updating HR user information
-exports.updateHR = async (req, res, next) => {
-  try {
-    const updatedHR = await HR.findByIdAndUpdate(req.params.hrId, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    if (!updatedHR) {
-      res.status(404).json({
-        status: "fail",
-        message: "HR user not found",
-      });
-    } else {
-      res.status(200).json({
-        status: "success",
-        message: "HR user updated successfully",
-        data: updatedHR,
-      });
-    }
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-};
-
-module.exports = hrcontroller;

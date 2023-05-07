@@ -1,51 +1,17 @@
+import UserModel from "../models/userModel";
 const bcrypt = require("bcryptjs");
+
 const jwt = require("jsonwebtoken");
-const secret = process.env.JWT_SECRET;
-const UserCollection = require("../models/userModel");
+require("dotenv").config();
 
-const userController = {};
+const JWT_SECRET = process.env.JWT_SECRET;
 
-// Authenticate a user
-userController.login = async (req, res, next) => {
-  console.log(req.body);
-
-  try {
-    const { email, password } = req.body;
-
-    // Check if the user exists
-    const users = await UserCollection.findOne({ email });
-    if (!users) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    // Check if the password is correct
-    const passwordMatch = await bcrypt.compare(password, users.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    // Generate a JWT token
-    const token = jwt.sign({ userId: users._id }, secret);
-
-    res.status(200).json({
-      message: "Authentication successful",
-      token,
-      doc: users._id,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-};
-
-// Register a new user
-userController.register = async (req, res) => {
-  console.log({ body: req.body });
+export const createUser = async (req, res, next) => {
   try {
     const { firstName, lastName, email, password, resume } = req.body;
 
     // Check if the email is already in use
-    const existingUser = await UserCollection.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res
         .status(400)
@@ -57,7 +23,7 @@ userController.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Create a new user object
-    const newUser = new UserCollection({
+    const newUser = new UserModel({
       firstName,
       lastName,
       email,
@@ -71,22 +37,45 @@ userController.register = async (req, res) => {
     res
       .status(201)
       .json({ status: true, message: "User created successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ status: false, message: "Server error" });
+  } catch (error) {
+    res.status(500).json({ status: false, msg: "catch err" });
   }
 };
 
-// Get user details
-userController.getUser = async (req, res) => {
+export const LoginUser = async (req, res, next) => {
   try {
-    const { userId } = req.body;
+    const { email, password } = req.body;
 
     // Check if the user exists
-    // const user = await UserCollection.findById(userId).select(
-    //   "firstName lastName  resume "
-    // );
-    const user = await UserCollection.findById(userId).select(
+    const users = await UserModel.findOne({ email });
+    if (!users) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    // Check if the password is correct
+    const passwordMatch = await bcrypt.compare(password, users.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    // console.log({ passwordMatch: passwordMatch });
+
+    // Generate a JWT token
+    const token = jwt.sign({ userId: users._id }, JWT_SECRET);
+    console.log(token);
+
+    res.status(200).json({
+      message: "Authentication successful",
+      token,
+      doc: users._id,
+    });
+  } catch (error) {
+    res.status(500).json({ status: false, msg: "catch err", error });
+  }
+};
+export const getUser = async (req, res, next) => {
+  try {
+    const { userId } = req.body;
+    const user = await UserModel.findById(userId).select(
       "firstName lastName email resume "
     );
     if (!user) {
@@ -94,10 +83,7 @@ userController.getUser = async (req, res) => {
     }
 
     res.status(200).json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
+  } catch (error) {
+    res.status(500).json({ status: false, msg: "catch err" });
   }
 };
-
-module.exports = userController;
