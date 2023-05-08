@@ -1,6 +1,6 @@
 # Project Title
 
-Job App
+Jobee
 
 ## Installation
 
