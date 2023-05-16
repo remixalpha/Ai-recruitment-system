@@ -1,5 +1,9 @@
 import "../../css/user/UserHome.css";
 import fsd from "../../assets/fsd.jpg";
+import fsd2 from "../../assets/fsd2.gif";
+import fsd4 from "../../assets/fsd4.gif";
+import fsd5 from "../../assets/fsd5.gif";
+
 import fsdc from "../../assets/job1.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +16,7 @@ function Home() {
   const [IsNotified, setIsNotified] = useState(true);
   const [UserName, setUserName] = useState("");
   const [job, setJob] = useState([]);
+  const [notify, setNotify] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const navigate = useNavigate();
   const homenav = useRef(null);
@@ -23,61 +28,7 @@ function Home() {
   const settingsnav = useRef(null);
   const MyUserId = localStorage.getItem("user");
   const URL = "http://localhost:5000/";
-  const [notify, setNotify] = useState([]);
 
-  const fetchUser = async () => {
-    await axios
-      .post(`${URL}users/getUser`, {
-        userId: MyUserId,
-      })
-      .then((res) => {
-        console.log({ res: res });
-        const firstName = res.data.firstName;
-        const lastName = res.data.lastName;
-        setUserName(`${firstName} ${lastName}`);
-      });
-  };
-  const fetchJob = async () => {
-    await axios.post(`${URL}job`).then((res) => {
-      console.log({ res: res });
-
-      setJob(res.data?.doc);
-    });
-  };
-  const jobApplyHandler = async (data) => {
-    console.log({ selected: data });
-    await axios
-      .post(`${URL}job/apply`, {
-        from: MyUserId,
-        to: data.CreatedHr,
-        jobId: data._id,
-      })
-      .then((res) => {
-        console.log({ res: res });
-        alert("hey");
-      });
-  };
-  const fetchJobRequest = async () => {
-    await axios
-      .post(`${URL}job/get`, {
-        from: MyUserId,
-        approved: true,
-      })
-      .then((res) => {
-        console.log({ res: res });
-        setNotify(res.data.doNotTrack);
-      });
-  };
-  useEffect(() => {
-    fetchUser();
-
-    fetchJob();
-    fetchJobRequest();
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
   const checkclick = () => {
     setIsChecked(false);
   };
@@ -200,11 +151,73 @@ function Home() {
     event.preventDefault();
     navigate("/settings");
   };
+
+  useEffect(() => {
+    fetchUser();
+
+    fetchJob();
+    fetchJobRequest();
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      const response = await axios.post(`${URL}users/`, {
+        userId: MyUserId,
+      });
+      const { firstName, lastName } = response.data;
+      setUserName(`${firstName} ${lastName}`);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  };
+
+  const fetchJob = async () => {
+    await axios.post(`${URL}job`).then((res) => {
+      console.log({ res: res });
+
+      setJob(res.data?.doc);
+    });
+  };
+
+  const jobApplyHandler = async (data) => {
+    console.log({ selected: data });
+    await axios
+      .post(`${URL}job/apply`, {
+        from: MyUserId,
+        to: data.CreatedHr,
+        jobId: data._id,
+      })
+      .then((res) => {
+        console.log({ res: res });
+        alert("Applyed");
+      });
+  };
+
+  const fetchJobRequest = async () => {
+    await axios
+      .post(`${URL}job/get`, {
+        from: MyUserId,
+        approved: true,
+      })
+      .then((res) => {
+        console.log({ notification: res });
+        setNotify(res.data.doNotTrack);
+      });
+  };
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+const handleCardClick = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
   return (
     <div>
       {isLoading ? (
         <div
-          className="w-full bg-indigo-100 flex"
+          className="w-full bg-white-100  flex"
           style={{
             height: "100vh",
             alignItems: "center",
@@ -223,21 +236,30 @@ function Home() {
       ) : (
         <div
           className="w-full h-full flex items-center justify-center"
-          style={{ height: "100vh", backgroundColor: "#f4f7fe" }}
+          style={{ height: "100%", backgroundColor: "#f4f7fe" }}
         >
-          <div
-            className="flex items-center justify-center flex-col gap-3 rounded-tl-lg rounded-bl-lg"
-            style={{
+          {/* Sidebar */}
+          <div className="flex items-center justify-center pb-[30rem]  "     
+           style={{
               position: "absolute",
+              top: 0,
               left: 0,
-              width: "20%",
-              height: "97vh",
+              width: "19%",
+              minHeight: "169%",
               backgroundColor: "white",
-            }}
+              overflowY: "auto",
+            }}>
+          <div
+            className="flex items-center justify-center flex-col gap-3 rounded-tl-lg rounded-bl-lg pb-10"
+        
           >
-            <h2 className="font-bold text-navy-700 dark:text-white text-2xl fixed left-10 top-20">
-              👋 Hey, {UserName}
-            </h2>
+            <div className="flex items-center justify-start cursor-pointer">
+              <h2 className="font-bold text-navy-700 dark:text-white text-2xl p-14 mr-12">
+                👋 Hey, {UserName ? UserName : "Loading..."}
+              </h2>
+            </div>
+
+            {/*Home*/}
             <div
               className="w-4/5 h-20  flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105"
               style={{
@@ -256,6 +278,7 @@ function Home() {
                 Home
               </h1>
             </div>
+
             {/*job*/}
             <div
               className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
@@ -280,12 +303,12 @@ function Home() {
             >
               <lord-icon
                 className="cursor-pointer"
-                src="https://cdn.lordicon.com/oezixobx.json"
+                src="https://cdn.lordicon.com/frjgvxce.json"
                 trigger="hover"
                 style={{ width: "22px", height: "22px" }}
               ></lord-icon>
               <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
-                JobApplyed
+                Job Applyed
               </h1>
             </div>
 
@@ -294,9 +317,13 @@ function Home() {
               onClick={meetingnavclick}
               ref={meetingnav}
             >
-              <span class="material-symbols-outlined font-extrabold text-2xl hover:scale-50 transition-transform">
-                groups
-              </span>
+              <lord-icon
+                className="cursor-pointer"
+                src="https://cdn.lordicon.com/hmkhncjw.json"
+                trigger="hover"
+                style={{ width: "22px", height: "22px" }}
+              ></lord-icon>
+
               <h1 className="font-bold text-navy-700 dark:text-white cursor-pointer">
                 Meetings
               </h1>
@@ -307,11 +334,14 @@ function Home() {
               onClick={quiznavclick}
               ref={quiznav}
             >
-              <span class="material-symbols-outlined font-extrabold text-2xl hover:scale-50 transition-transform">
-                groups
-              </span>
+              <lord-icon
+                className="cursor-pointer"
+                src="https://cdn.lordicon.com/zncllhmn.json"
+                trigger="hover"
+                style={{ width: "22px", height: "22px" }}
+              ></lord-icon>
               <h1 className="font-bold text-navy-700 dark:text-white cursor-pointer">
-                Quiz
+                Test
               </h1>
             </div>
 
@@ -320,9 +350,12 @@ function Home() {
               onClick={companynavclick}
               ref={companynav}
             >
-              <span class="material-symbols-outlined font-extrabold text-2xl hover:rotate-12 transition-transform">
-                business_center
-              </span>
+              <lord-icon
+                className="cursor-pointer"
+                src="https://cdn.lordicon.com/lqsduwhb.json"
+                trigger="hover"
+                style={{ width: "22px", height: "22px" }}
+              ></lord-icon>
               <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
                 Companies
               </h1>
@@ -342,17 +375,20 @@ function Home() {
               </h1>
             </div>
           </div>
-
+          </div>
+          {/* Middle portion */}
           <div
-            className="flex items-center justify-center flex-col gap-4"
+            className="flex items-center justify-center flex-col gap-4  "
             style={{
-              width: "52%",
-              height: "97vh",
+              width: "59%",
               backgroundColor: "#f4f7fe",
+              minHeight: "100%",
             }}
           >
-            <div className="relative mt-[3px] flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[700px] xl:gap-2">
-              <div className="flex h-full items-center rounded-full bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[520px]">
+            <div className="relative mt-10  flex h-[61px] w-[355px] flex-grow items-center justify-around gap-2 rounded-full bg-white px-2 py-2 shadow-xl shadow-shadow-500 dark:!bg-navy-800 dark:shadow-none md:w-[365px] md:flex-grow-0 md:gap-1 xl:w-[700px] xl:gap-2">
+              {/* Search-bar */}
+
+              <div className="flex items-left rounded-full bg-lightPrimary text-navy-700 dark:text-white xl:w-[520px]">
                 <p className="pl-3 pr-2 text-xl">
                   <lord-icon
                     className="cursor-pointer h-5 w-4 text-gray-400 dark:text-white"
@@ -364,7 +400,7 @@ function Home() {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="block h-full w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
+                  className="block w-full h-full mt-2 rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
                 />
               </div>
 
@@ -406,11 +442,12 @@ function Home() {
                           </div>
                           <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
                             <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-gray-900">
-                              Congratz {data.jobId.jobName} is Approved
+                              Congratz {data.from.companyName}
+                              {""} is Approved
                             </p>
                             <p className="font-base text-left text-xs text-gray-900 dark:text-gray-900">
                               Your {data.jobId.jobName} apply has been Approved
-                              by Hr Interview date will be sent soon
+                              Interview date will be sent soon
                             </p>
                           </div>
                         </button>
@@ -440,6 +477,8 @@ function Home() {
                   </div>
                 }
               />
+              
+              {/* Profile */}
               <p className="cursor-pointer">
                 <lord-icon
                   className="cursor-pointer"
@@ -452,22 +491,26 @@ function Home() {
             </div>
 
             {/* latest job card */}
+
             <div
               className=" rounded-[20px] flex items-center justify-center"
               style={{
                 backgroundColor: "white",
-                width: "56rem",
-                height: "20rem",
-                marginRight: "5rem",
+                width: "65rem",
+                marginRight:"4rem",
+                minHeight: "100%",
+               
               }}
             >
-              <div className="w-3/5 h-full rounded-lg flex items-center justify-center flex-col">
+              <div className="w-3/5 h-full rounded-full flex items-center justify-center flex-col">
                 <div className="w-auto h-auto ">
-                  <h1 className="text-2xl font-bold text-black md:text-3xl md:leading-[42 mt-70 pt-12">
+                  <h1 className="text-2xl pl-20 font-semibold text-black md:text-3xl md:leading-[42 mt-70 pt-12">
                     FULLSTACK DEVELOPER
                   </h1>
-                  <h2 className="pt-6 text-base font-medium text-gray-600">
-                    We Need A FullStack Developer
+                  <h2 className="pt-6 pl-20 text-base font-medium text-gray-600">
+                    We Are a Fast-paced, dynamic organization looking for a
+                    skilled and experienced senior fullstack development
+                    engineer to join our growing team
                   </h2>
                 </div>
                 <div className="w-4/5 h-1/2"></div>
@@ -476,13 +519,13 @@ function Home() {
                   style={{ width: "90%" }}
                 >
                   <button
-                    className="text-white linear rounded-xl bg-blue-700  px-8 py-2 text-center text-base font-semibold transition duration-200 hover:!bg-black/80 active:!bg-black/70 mb-20"
+                    className="text-white linear rounded-full bg-blue-700  mt-10 px-8 py-2 text-center text-base font-semibold transition duration-200 hover:!bg-black/80 active:!bg-black/70 mb-20"
                     onClick={handleButtonClick}
                   >
                     APPLY
                   </button>
                   <button
-                    className="w-1/2 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white pl-4 pr-4 rounded-lg hover:scale-105 mb-20"
+                    className="w-1/3 h-10 bg-gray-900 p-2 text-sm font-sans font-semibold tracking-wide text-white mt-10 pl-4 pr-4 rounded hover:scale-105 mb-20"
                     onClick={jobappnavclick}
                   >
                     LEARN MORE
@@ -490,19 +533,21 @@ function Home() {
                 </div>
               </div>
 
-              <div className="w-2/5 h-full rounded-lg p-1">
-                <img src={fsd} alt="pic" className="h-full rounded-lg" />
+              <div className="w-2/5 rounded-lg pl-10 ml-7 flex-grow">
+                <img src={fsd2} alt="pic" className="h-[15rem] rounded-lg" />
               </div>
             </div>
 
+            {/* New Jobs */}
             <div
               className="rounded-lg flex items-left justify-center flex-col gap-1 "
               style={{
                 width: "100%",
-                height: "52%",
+                minHeight: "100%",
                 backgroundColor: "#f4f7fe",
               }}
             >
+              {/* Jobavailable bar */}
               <div
                 className="mb-4 mt-5 flex flex-col justify-between px-4 md:flex-row md:items-center cursor-pointer"
                 style={{ width: "95%" }}
@@ -518,9 +563,11 @@ function Home() {
                   See All
                 </h1>
               </div>
+
               <div
-                className="rounded-[20px] flex items-center justify-center flex-row flex-wrap gap-2"
-                style={{ width: "95%", height: "90%" }}
+                className="rounded-[20px] flex items-center justify-center flex-row flex-wrap gap-10"
+                style={{ width: "100%", minHeight: "100%" }}
+                onClick={handleCardClick}
               >
                 {/* <div
                   className="bg-white rounded-[15px] p-1"
@@ -616,22 +663,25 @@ function Home() {
                     </button>
                   </div>
                 </div> */}
+
+                {/* New jobs */}
                 {job.map((data) => (
                   <div
-                    className="bg-white rounded-[15px] p-1"
-                    style={{ width: "31.666%", height: "97%" }}
+                    key={data.id}
+                    className="bg-white rounded-[15px] p-1 "
+                    style={{ width: "30%", height: "100%" }}
                   >
                     {data.categories.includes("Software") ? (
                       <img
-                        src={fsdc}
+                        src={fsd}
                         alt="pic"
-                        className="h-2/5 pl-6 w-90 rounded-tl-lg "
+                        className="h-2/5 pl-20 w-90 rounded-tl-lg "
                       />
                     ) : (
                       <img
-                        src={fsd}
+                        src={fsd4}
                         alt="pic"
-                        className="h-2/5 pl-6 w-90 rounded-tl-lg "
+                        className="h-2/5 pl-20 w-90 rounded-tl-lg "
                       />
                     )}
 
@@ -639,11 +689,12 @@ function Home() {
                       <h1 className="text-xl font-sans font-bold text-left ml-5 text-gray-900 uppercase">
                         {data.jobName}
                       </h1>
-                      <h1 className="text-sm font-kern font-semibold ml-5 pr-5 text-gray-700 ">
+                      <h1 className="text-xs font-kern font-semibold ml-5 pr-5 text-gray-700 ">
                         {data.desc}
                       </h1>
                     </div>
-                    <div className="w-full h-1/5 rounded-bl-lg rounded-br-lg flex items-center justify-center cursor-pointer gap-3">
+                    
+                    <div className="w-full h-1/5 pt-10 pb-5 rounded-bl-lg rounded-br-lg flex items-center justify-center cursor-pointer gap-5">
                       {isChecked ? (
                         <lord-icon
                           onClick={checkclick}
@@ -681,37 +732,42 @@ function Home() {
             </div>
           </div>
 
+          {/* Right-side bar */}
+         
+             {job.map((data) => (
           <div
-            className="bg-white flex items-center justify-center rounded-tr-lg rounded-br-lg"
+            className="bg-white flex items-center justify-center rounded-lg animation-class"
+            
             style={{
               position: "absolute",
+              top:"0",
               right: 0,
-              width: "25%",
-              height: "97vh",
+              width: "23.5%",
+              height: "167vh",
               backgroundColor: "white",
             }}
           >
-            {IsNotified ? (
+            
+             
               <div
-                className=" flex items-center justify-center flex-col gap-4 rounded-lg"
+              className="flex items-center justify-center flex-col gap-4 mb-[40rem] "
+
                 style={{
                   width: "100%",
-                  height: "93vh",
+                  height: "auto",
                   backgroundColor: "white",
                 }}
               >
-                <img src={fsdc} alt="pic" className="h-2/6" />
+                <img src={fsd5} alt="pic" className="h-2/6" />
                 <div
                   className="flex flex-col gap-2"
                   style={{ width: "80%", height: "auto" }}
                 >
                   <h1 className="text-1xl font-sans font-extrabold text-gray-900">
-                    FULLSTACK DEVELOPER
+                  {data.jobName}
                   </h1>
                   <h1 className="text-sm font-sans font-semibold text-gray-700">
-                    We Are a Fast-paced, dynamic organization looking for a
-                    skilled and experienced senior fullstack development
-                    engineer to join our growing team...
+                  {data.desc}
                   </h1>
                 </div>
                 <div
@@ -744,40 +800,14 @@ function Home() {
                     APPLY
                   </button>
                 </div>
+                
               </div>
-            ) : (
-              <div
-                className="shadow-md flex items-center flex-col gap-2 rounded-lg"
-                style={{
-                  width: "90%",
-                  height: "93vh",
-                  backgroundColor: "aliceblue",
-                }}
-              >
-                <div className="w-full h-auto text-center">
-                  <h1
-                    className="font-sans font-bold text-neutral-900 mt-7"
-                    style={{ fontSize: "1rem" }}
-                  >
-                    Notifications
-                  </h1>
-                </div>
-
-                <div
-                  className="w-full rounded-bl-lg rounded-br -lg flex items-center justify-center gap-2"
-                  style={{ height: "10%" }}
-                >
-                  <button
-                    onClick={notifiedtrue}
-                    className="h-10 shadow-md bg-gray-900 p-1 text-sm font-sans font-semibold tracking-wide text-white pl-2 pr-2 rounded-lg hover:scale-105"
-                    style={{ width: "90%" }}
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            )}
+              
+           
+            
           </div>
+          ))}
+     
         </div>
       )}
     </div>

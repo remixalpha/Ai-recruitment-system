@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import Header from "../navbar/Header";
 import axios from "axios";
 function JobPosting() {
   const URL = "http://localhost:5000/";
@@ -68,6 +69,7 @@ function JobPosting() {
       )
     );
   }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   const IsStepOneTrue = () => {
     setIsStepOne(true);
@@ -80,7 +82,7 @@ function JobPosting() {
     <div>
       {isLoading ? (
         <div
-          className="w-full bg-indigo-100 flex"
+          className="w-full bg-white-100 flex"
           style={{
             height: "100vh",
             alignItems: "center",
@@ -98,8 +100,8 @@ function JobPosting() {
         </div>
       ) : (
         <div className="flex flex-col h-screen ">
-          <nav className="flex items-center justify-between bg-white border-b border-gray-200 pb-5 pt-5 px-8 py-2">
-            <div className="text-2xl font-bold">Jobee</div>
+          <nav className="flex items-center justify-between bg-white border-gray-200 pb-5 pt-5 px-8 py-2">
+            <div className="flex items-center justify-between pb-10 "><Header /></div>
             <ul className="flex items-center cursor-pointer">
               <li
                 className="text-base font-sans font-semibold ml-4"
@@ -127,36 +129,41 @@ function JobPosting() {
               </li>
             </ul>
           </nav>
+
           <div className="w-full h-full flex items-start justify-center flex-col ">
-            <h1 className="w-full h-fit p-3 text-2xl font-bold font-sans px-4 py-4">
-              CREATE OPENINGS
-            </h1>
+          
             <form
-              className="w-full h-full flex items-center justify-center mt-20"
+              className="w-full h-full flex items-center justify-center mt-5"
               onSubmit={handleSubmit}
             >
               <div
-                className="p-6 rounded-xl shadow-md flex items-center justify-center gap-2 mt-10"
+                className="p-6 h-full rounded-xl shadow-md flex items-center justify-center gap-2 mt-10"
                 style={{
-                  height: "85%",
+            
                   width: "95%",
-                  backgroundColor: "whitesmoke",
+                  backgroundColor: "white",
                 }}
               >
-                <div className="w-full h-fit p-4 flex items-start justify-center flex-col gap-2">
-                  <label
-                    htmlFor="JobName"
-                    className="text-xl font-bold text-gray-800"
-                  >
-                    Image Upload
-                  </label>
-                  <input
-                    type="file"
-                    className="font-bold w-full p-3 rounded-lg"
-                    name="Image"
-                    id="Image"
-                    onChange={handleChange}
-                  />
+                <div className='p-6 rounded-xl flex items-center justify-center gap-2 -mt-8' style={{height:'85%',width:'95%',backgroundColor:'white'}}>
+                
+                
+                
+                <div {...getRootProps()} className="flex items-center justify-center border-2 border-dashed border-blue-400 p-2 rounded-xl text-center overflow-hidden" style={{width:'50%',height:'100%'}}>
+                                        <input {...getInputProps()} className='outline-none'  onChange={handleChange}/>
+                                            {files.length === 0 ? (
+                                                isDragActive ? (
+                                                    <p className="text-gray-600 font-sans font-bold flex items-center justify-center flex-col"><span class="material-symbols-outlined text-8xl">add_photo_alternate</span>Drop the files here ...</p>
+                                                ) : (
+                                                    <p className="text-gray-600 font-sans font-bold flex items-center justify-center flex-col"><span class="material-symbols-outlined text-8xl">add_photo_alternate</span>Drag 'n' drop some files here, or click to select files</p>
+                                                )
+                                            ) : (
+                                        <div>
+                                            <img className="mx-auto mb-2" src={files[0].preview} alt={files[0].name}/>
+                                            <p className="text-gray-600">{files[0].name}</p>
+                                        </div>
+                                            )}
+                </div>
+                <div className='w-1/2 h-full rounded-xl'>
                   <div className="w-full h-fit p-4 flex items-start justify-center flex-col gap-2">
                     <label
                       htmlFor="JobName"
@@ -255,6 +262,7 @@ function JobPosting() {
                     >
                       Post
                     </button>
+                  </div>
                   </div>
                 </div>
               </div>

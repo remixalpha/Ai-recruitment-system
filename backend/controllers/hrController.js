@@ -64,15 +64,15 @@ export const hrLogin = async (req, res, next) => {
 };
 export const getHr = async (req, res, next) => {
   try {
-    const { userId } = req.body;
-    const user = await HrModel.findById(userId).select(
-      "firstName lastName email resume "
+    const { HrId } = req.body;
+    const hr = await HrModel.findById(userId).select(
+      "companyName hrName email password companyType "
     );
-    if (!user) {
+    if (!hr) {
       return res.status(404).json({ message: "hr not found" });
     }
 
-    res.status(200).json(user);
+    res.status(200).json({doNotTrack:hr});
   } catch (error) {
     res.status(500).json({ status: false, msg: "catch err" });
   }

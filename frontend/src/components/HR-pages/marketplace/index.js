@@ -1,4 +1,5 @@
 import Banner from "../marketplace/components/Banner";
+import Header from "../../navbar/Header";
 import Navbar from "../../navbar/index";
 import NFt2 from "../../../assets/img/nfts/Nft2.png";
 import NFt4 from "../../../assets/img/nfts/Nft4.png";
@@ -19,17 +20,18 @@ import NftCard from "../../card/NftCard";
 const Marketplace = () => {
   const homenav = useRef(null);
   const meetingnav = useRef(null);
+  const postnav = useRef(null);
   const navigate = useNavigate();
   const [hr, setHr] = useState({});
   const [job, setJob] = useState([]);
   const URL = "http://localhost:5000/";
 
-  const MyUserId = localStorage.getItem("hr");
+  const HrId = localStorage.getItem("hr");
 
   const fetchUser = async () => {
     await axios
       .post(`${URL}hr`, {
-        userId: MyUserId,
+        userId: HrId,
       })
       .then((res) => {
         console.log({ res: res });
@@ -39,12 +41,13 @@ const Marketplace = () => {
   const fetchJob = async () => {
     await axios
       .post(`${URL}job`, {
-        CreatedHr: MyUserId,
+        CreatedHr: HrId,
       })
       .then((res) => {
         console.log({ res: res });
-
         setJob(res.data?.doc);
+        
+
       });
   };
 
@@ -69,6 +72,11 @@ const Marketplace = () => {
     navigate("/jobpost");
   };
 
+  const testpostclick = (event) => {
+    event.preventDefault();
+    navigate("/postest");
+  };
+
   const meetingnavclick = (event) => {
     meetingnav.current.style.borderLeft = "4px solid #EF4444";
     meetingnav.current.style.backgroundColor = "white";
@@ -89,20 +97,24 @@ const Marketplace = () => {
 
   return (
     <div className="main">
-      <div className="sidebar">
-        <div
-          className="flex items-center justify-center flex-col gap-3 rounded-tl-lg rounded-bl-lg"
-          style={{
-            position: "absolute",
-            left: 0,
-            width: "20%",
-            height: "97vh",
-            backgroundColor: "white",
-          }}
-        >
-          <h2 className="font-bold text-navy-700 dark:text-white text-2xl fixed left-10 top-40">
-            👋 Hei, {}
-          </h2>
+      <div
+        className="sidebar "
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "19%",
+          height: "250vh",
+          backgroundColor: "white",
+        }}
+      >
+        <Header />
+        <div className="flex pt-20 items-center justify-center flex-col gap-3 rounded-tl-lg rounded-bl-lg">
+          <div className="flex items-center justify-start cursor-pointer">
+            <h2 className="font-bold text-navy-700 dark:text-white text-2xl pt-20 mb-20 mr-12 ">
+              👋 Hey, {"Loading..."}
+            </h2>
+          </div>
 
           <div
             className="w-4/5 h-20  flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105"
@@ -114,9 +126,9 @@ const Marketplace = () => {
           >
             <lord-icon
               className="cursor-pointer"
-              src="https://cdn.lordicon.com/slduhdil.json"
+              src="https://cdn.lordicon.com/osuxyevn.json"
               trigger="hover"
-              style={{ width: "22px", height: "22px" }}
+              style={{ width: "25px", height: "22px" }}
             ></lord-icon>
             <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
               Home
@@ -129,12 +141,28 @@ const Marketplace = () => {
           >
             <lord-icon
               className="cursor-pointer"
-              src="https://cdn.lordicon.com/oezixobx.json"
+              src="https://cdn.lordicon.com/ynwbvguu.json"
               trigger="hover"
               style={{ width: "22px", height: "22px" }}
             ></lord-icon>
             <h1 className="font-bold text-navy-700 dark:text-white  cursor-pointer">
-              JobApply
+              Post Job
+            </h1>
+          </div>
+
+          <div
+            className="w-4/5 h-20 flex items-center justify-start gap-2 p-5 cursor-pointer rounded-full hover:scale-105 hover:bg-f4f7fe"
+            onClick={testpostclick}
+            ref={postnav}
+          >
+            <lord-icon
+              className="cursor-pointer"
+              src="https://cdn.lordicon.com/vufjamqa.json"
+              trigger="hover"
+              style={{ width: "22px", height: "22px" }}
+            ></lord-icon>
+            <h1 className="font-bold text-navy-700 dark:text-white cursor-pointer">
+              Post Test
             </h1>
           </div>
 
@@ -143,9 +171,12 @@ const Marketplace = () => {
             onClick={meetingnavclick}
             ref={meetingnav}
           >
-            <span className="material-symbols-outlined font-extrabold text-2xl hover:scale-50 transition-transform">
-              groups
-            </span>
+            <lord-icon
+              className="cursor-pointer"
+              src="https://cdn.lordicon.com/ycwlopoz.json"
+              trigger="hover"
+              style={{ width: "22px", height: "22px" }}
+            ></lord-icon>
             <h1 className="font-bold text-navy-700 dark:text-white cursor-pointer">
               Meetings
             </h1>
@@ -156,7 +187,7 @@ const Marketplace = () => {
             onClick={signoutclick}
           >
             <lord-icon
-              src="https://cdn.lordicon.com/dycatgju.json"
+              src="https://cdn.lordicon.com/hwuyodym.json"
               trigger="hover"
               style={{ width: "22px", height: "22px" }}
             ></lord-icon>

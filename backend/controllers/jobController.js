@@ -44,6 +44,7 @@ export const getApplication = async (req, res, next) => {
   try {
     console.log(req.body);
     let doc = await ApplicationModel.find(req.body).populate("jobId from");
+    console.log({doc:doc})
     res.status(200).json({ status: true, doNotTrack: doc });
   } catch (error) {
     // next(err);

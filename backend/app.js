@@ -15,6 +15,12 @@ Mongoose.connect("mongodb://127.0.0.1:27017/Ai", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+// production mongo
+// Mongoose.connect("mongodb+srv://jobeeinternationals:jobe123@jobee.u94ar1c.mongodb.net/?retryWrites=true&w=majority", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
 const db = Mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", function () {

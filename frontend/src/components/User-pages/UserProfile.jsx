@@ -33,7 +33,7 @@ function Profile() {
 
   const fetchUser = async () => {
     await axios
-      .post(`${URL}users/getUser`, {
+      .post(`${URL}users/`, {
         userId: MyUserId,
       })
       .then((res) => {
@@ -152,7 +152,7 @@ function Profile() {
     <div>
       {isLoading ? (
         <div
-          className="w-full bg-indigo-100 flex"
+          className="w-full bg-white-100 flex"
           style={{
             height: "100vh",
             alignItems: "center",

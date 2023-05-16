@@ -19,11 +19,13 @@ import Room from "./components/Meet/Room";
 import QuestionBox from "./components/Quiz/QuestionBox";
 
 //HR
-import HrHome from "./components/HR-pages/HRhome";
+
 import HRHome from "./components/HR-pages/marketplace/index";
 import HrProfile from "./components/HR-pages/HRProfile";
 import JobApplication from "./components/User-pages/JobApplication";
 import JobPosting from "./components/HR-pages/JobPosting";
+import CreateQ from "./components/Quiz/CreateQuestion";
+
 
 
 
@@ -36,6 +38,7 @@ import UserJobApplyed from "./components/User-pages/JobApply";
 import UserMeetings from "./components/User-pages/UserMeetings";
 import UserCompanies from "./components/User-pages/UserCompanies";
 import UserSettings from "./components/User-pages/UserSettings";
+
 
 
 
@@ -64,6 +67,7 @@ function App() {
           <Route path="/hrPro" element={<HrProfile />} />
           <Route path="/jobapp" element={<JobApplication />} />
           <Route path="/jobpost" element={<JobPosting />} />
+          <Route path="/postest" element={<CreateQ />} />
           <Route path="/meethome" element={<Meethome />} />
           <Route path="/room/:roomID" element={<Room />} />
         </Routes>
@@ -84,6 +88,8 @@ function App() {
           <Route path="/meethome" element={<Meethome />} />
           <Route path="/room/:roomID" element={<Room />} />
           <Route exact path="/assesmentest" element={<QuestionBox />} />
+
+
         </Routes>
       </BrowserRouter>
     );

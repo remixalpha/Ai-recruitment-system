@@ -35,7 +35,7 @@ function Settings() {
     <div>
       {isLoading ? (
         <div
-          className="w-full bg-indigo-100 flex"
+          className="w-full bg-white-100 flex"
           style={{
             height: "100vh",
             alignItems: "center",

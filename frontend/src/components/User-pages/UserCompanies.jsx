@@ -28,10 +28,11 @@ function Companies(){
         event.preventDefault();
         navigate('/');
     }
+
     return(
         <div>
             {isLoading ? (
-                <div className="w-full bg-indigo-100 flex" style={{height:'100vh',alignItems:'center',justifyContent:'center'}}>
+                <div className="w-full bg-white-100 flex" style={{height:'100vh',alignItems:'center',justifyContent:'center'}}>
                     <div>
                     <lord-icon
                             src="https://cdn.lordicon.com/oezixobx.json"
@@ -43,7 +44,7 @@ function Companies(){
                 </div>
             ) : (
                 <div className="flex flex-col h-screen">
-                    <nav className="flex items-center justify-between bg-white border-b border-gray-200 pb-5 pt-5 px-8 py-2">
+                    <nav className="flex items-center justify-between bg-white  pb-5 pt-5 px-8 py-2">
                         <div className="text-2xl font-bold">Jobee</div>
                         <ul className="flex items-center cursor-pointer">
                             <li className="text-base font-sans font-semibold ml-4" onClick={homeclick}>Home</li>

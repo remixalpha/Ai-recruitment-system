@@ -23,4 +23,26 @@ body{
   .hover\:bg-f4f7fe:hover {
     background-color: #f4f7fe;
   }
+  .animation-class {
+    animation-name: pop-up;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out; /* Adjust the timing function for desired effect */
+    animation-fill-mode: forwards;
+    opacity: 0; /* Start with opacity set to 0 */
+    transform: scale(0.4); /* Start with a smaller scale */
+  }
+  
+  @keyframes pop-up {
+    0% {
+      transform: scale(0.5);
+      opacity: 0;
+    }
+    80% {
+      transform: scale(1.1); /* Increase the scale to make it pop */
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
   

@@ -29,4 +29,4 @@ const hrSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.model("Hr", hrSchema);
+export default mongoose.model("hr", hrSchema);

@@ -47,7 +47,7 @@ const exit = (event) => {
     return(
         <div>
             {isLoading ? (
-                <div className="w-full bg-indigo-100 flex" style={{height:'100vh',alignItems:'center',justifyContent:'center'}}>
+                <div className="w-full bg-white-100 flex" style={{height:'100vh',alignItems:'center',justifyContent:'center'}}>
                     <div>
                     <lord-icon
                             src="https://cdn.lordicon.com/oezixobx.json"
